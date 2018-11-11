@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>body</title>
+    <script src="../js/filter.js"></script>
+</head>
+<style>
+    table {
+        border-radius: 5px;
+        width: 100%;
+        border: 1px solid #999999;
+        text-align: center;
+    }
+    td{
+        border: 1px solid #BBBBBB;
+    }
+</style>
+<body onload="filter()">
+<h3 align="center">商城信息</h3>
+<div>
+    <p>用户统计</p>
+    <p style="border: 1px solid #999999;border-radius: 5px;padding-left: 10px">用户总数：<?=$countUser?></p>
+</div><hr />
+<div>
+    <p>鲜花统计</p>
+    <table>
+        <tr>
+            <td>在售</td>
+            <td>缺货</td>
+            <td>下架</td>
+            <td>总计</td>
+        </tr>
+        <tr>
+            <?php while($row=mysqli_fetch_assoc($countFlower)) :?>
+            <?php
+                $allFlower=$row['status']+$allFlower;
+            ?>
+            <td><?=$row['status']?></td>
+            <?php endwhile;?>
+            <td><?=$allFlower?></td>
+        </tr>
+    </table>
+</div><hr />
+<div>
+    <p>订单统计</p>
+    <p style="border: 1px solid #999999;border-radius: 5px;padding-left: 10px">订单总数：<?=$countOrder?></p>
+</div>
+</body>
+</html>

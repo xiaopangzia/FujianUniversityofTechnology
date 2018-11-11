@@ -1,0 +1,86 @@
+table {
+    border: 1px solid #F1F1F1;
+    background-color: #F1F1F1;
+    margin: 60px auto;
+    width: 500px;
+    height: 330px;
+    border-radius: 5px;
+}
+
+body {
+    background-color: #DDDDDD;
+}
+
+
+.username, .password {
+    width: 300px;
+    height: 40px;
+    font-size: 25px;
+    line-height: 40px;
+    padding-left: 10px;
+    margin-left: 90px;
+}
+
+.sumbitBtn {
+    width: 350px;
+    height: 35px;
+    margin-left: 72px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.username:hover,.password:hover{
+    cursor:pointer;
+}
+
+#errorLabel {
+    font-size: 20px;
+    color: #93171f;
+    margin-left: 90px;
+}
+
+.sumbitBtn:hover{
+    background-color: #757575;
+    cursor:pointer;
+    border-radius: 5px;
+}
+
+#tdTitle{
+    font-size: 25px;
+    border-bottom: 3px solid #999999;
+}
+
+h1{
+    margin: 0 auto;
+    text-align: center;
+    width: 600px;
+    height: 150px;
+    line-height: 150px;
+    font-size: 70px;
+}
+
+#imageCode {
+    border: 1px solid #333333;
+    width: 150px;
+    height: 40px;
+    margin-left: 40px;
+    font-size: 50px;
+}
+
+#code {
+    width: 100px;
+    height: 40px;
+    line-height: 30px;
+    font-size: 25px;
+    margin-left: 90px;
+    padding-left: 10px;
+}
+
+#imageCode,#code {
+    vertical-align:middle;
+}
+
+#imageCode:hover{
+    cursor: pointer;
+
+}

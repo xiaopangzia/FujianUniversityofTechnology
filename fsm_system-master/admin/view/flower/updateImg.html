@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<form method="post" action="updateImg.php" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<?=$id?>">
+    <input type="hidden" name="img" value="<?=$old?>">
+    <input type="file" name="myfile">
+    <input type="submit" value="修改图片"/>
+</form>
+</body>
+</html>

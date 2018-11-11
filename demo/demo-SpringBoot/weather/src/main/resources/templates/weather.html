@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>天气预报</title>
+</head>
+
+<body>
+    <div style="text-align: center">
+        <select name="sheng" id="sheng">
+            <option value="0">请选择省份</option>
+        </select>
+
+        <select hidden name="shi" id="shi">
+            <option value="0">请选择城市</option>
+        </select>
+
+        <select hidden name="qu" id="qu">
+            <option value="0">请选择区镇</option>
+        </select>
+    </div>
+    <div id="main" style="width: 800px;height:600px;margin: 100px auto;"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.min.js"></script>
+
+<script>
+    sheng()
+    $("#sheng").click(function () {
+        shi()
+    })
+    $('#shi').click(function () {
+        qu()
+    })
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.setOption({
+        title: {
+            text: '未来24小时天气预报'
+        },
+        tooltip: {},
+        legend: {
+            data: ['温度']
+        },
+        xAxis: {
+            name: '时间',
+            data: []
+        },
+        yAxis: {
+            name: '气温'
+        },
+        series: [{
+            name: '温度',
+            type: 'line',
+            data: []
+        }]
+    });
+
+    function sheng() {
+        $.ajax({
+            type: "GET",
+            async: true,
+            url: "http:127.0.0.1:8080/weather/city",
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function f(data) {
+                for (var index = 0; index < data.result.length; index++) {
+                    $('#sheng').append("<option value='" + (index + 1) + "'>" + data.result[index].city +
+                        "</option>")
+                }
+            }
+        });
+    }
+
+    function shi() {
+        var pid = $("#sheng").val();
+        if (pid != '0') {
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "http:127.0.0.1:8080/weather/city?pid=" + pid,
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function f(data) {
+                    if (data.result.length == "0") {
+                        $('#shi').hide()
+                        $('#qu').hide()
+                        $.get('http://127.0.0.1:8080/weather/weather?cid=' + pid)
+                            .done(function (data) {
+                                // 填入数据
+                                myChart.setOption({
+                                    xAxis: {
+                                        data: data.times
+                                    },
+                                    series: [{
+                                        // 根据名字对应到相应的系列
+                                        data: data.temps
+                                    }]
+                                });
+                            });
+
+                    } else {
+                        $('#shi').show()
+                        $('#shi option').remove();
+                        $('#qu').hide()
+                        $('#shi').append("<option value='0'>请选择城市</option>")
+                        for (var index = 0; index < data.result.length; index++) {
+                            $('#shi').append("<option value='" + (data.result[index].cityid) + "'>" + data.result[
+                                index].city + "</option>")
+                        }
+                    }
+
+                }
+            });
+        } else {
+            $('#shi option').remove();
+            $('#qu option').remove();
+            $('#shi').append("<option value='0'>请选择城市</option>");
+            $('#qu').append("<option value='0'>请选择区镇</option>");
+        }
+    }
+
+    function qu() {
+        var pid = $("#shi").val();
+        if (pid != '0') {
+            $.ajax({
+                type: "GET",
+                async: true,
+                url: "http:127.0.0.1:8080/weather/city?pid=" + pid,
+                dataType: "json",
+                contentType: "application/json;charset=utf-8",
+                success: function f(data) {
+                    if (data.result.length == "0") {
+                        $('#qu').hide()
+                        $.get('http://127.0.0.1:8080/weather/weather?cid=' + pid)
+                            .done(function (data) {
+                                // 填入数据
+                                myChart.setOption({
+                                    xAxis: {
+                                        data: data.times
+                                    },
+                                    series: [{
+                                        // 根据名字对应到相应的系列
+                                        data: data.temps
+                                    }]
+                                });
+                            });
+                    } else {
+                        $('#qu').show()
+                        $('#qu option').remove();
+                        $('#qu').append("<option value='0'>请选择区镇</option>");
+                        for (var index = 0; index < data.result.length; index++) {
+                            $('#qu').append("<option value='" + (data.result[index].cityid) +
+                                "'>" + data.result[index].city + "</option>")
+                        }
+                    }
+                }
+            });
+        } else {
+            $('#qu option').remove();
+            $('#qu').append("<option value='0'>请选择区镇</option>");
+        }
+    }
+
+    $('#qu').click(function () {
+        var cid = $('#qu').val()
+        if (cid != '0') {
+            $.get('http://127.0.0.1:8080/weather/weather?cid=' + cid)
+                .done(function (data) {
+                    // 填入数据
+                    myChart.setOption({
+                        xAxis: {
+                            data: data.times
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            data: data.temps
+                        }]
+                    });
+                });
+        }
+
+    })
+</script>
+
+</html>

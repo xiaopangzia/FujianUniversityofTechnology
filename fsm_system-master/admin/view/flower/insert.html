@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加鲜花</title>
+</head>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<form action="../../Controller/flower/insert.php" method="post" enctype="multipart/form-data">
+    <table style="margin: 0 auto;">
+        <tr>
+            <td>鲜花名</td>
+            <td>
+                <input type="text" id="flowerName" name="flowerName"/>
+            </td>
+        </tr>
+        <tr>
+            <td>单价</td>
+            <td>
+                <input type="text" id="flowerPrice" name="flowerPrice"/>
+            </td>
+        </tr>
+        <tr>
+            <td>数量</td>
+            <td>
+                <input type="number" id="flowerNum" name="flowerNum"/>
+            </td>
+        </tr>
+        <tr>
+            <td>简介</td>
+            <td>
+                <input type="text" id="flowerText" name="flowerText"/>
+            </td>
+        </tr>
+        <tr>
+            <td>鲜花状态</td>
+            <td>
+                <select id="status" name="status">
+                    <option value="" selected>请选择鲜花状态</option>
+                    <option value="0">在售</option>
+                    <option value="1">缺货</option>
+                    <option value="2">下架</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>图片：</td>
+            <td>
+                <input type="file" id="flowerImg" name="flowerImg"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" id="submit" onclick="return insert()" value="提交"/>
+            </td>
+        </tr>
+    </table>
+</form>
+<script src="../../../js/jquery.js"></script>
+<script>
+    $("#flowerName").blur(function () {
+        if (this.value==="") {
+            this.placeholder="请输入鲜花名";
+        }
+    });
+
+    $("#flowerPrice").blur(function () {
+        if (this.value==="") {
+            this.placeholder="请输入鲜花单价";
+        }
+    });
+
+    $("#flowerNum").blur(function () {
+        if (this.value==="") {
+            this.placeholder="请输入鲜花数量";
+        }
+    });
+
+    $("#flowerText").blur(function () {
+        if (this.value==="") {
+            this.placeholder="请输入鲜花简介";
+        }
+    });
+
+    function insert() {
+        if ($("#flowerName").val() === "" || $("#flowerNum").val() === "" || $("#flowerPrice").val() === "" ||
+            $("#flowerText").val() === "" || $("#flowerImg").val() === "" || $("#status").val() === "") {
+            alert("请输入完整信息");
+            return false;
+        }
+        return true;
+    }
+
+    $("")
+
+</script>
+</body>
+</html>

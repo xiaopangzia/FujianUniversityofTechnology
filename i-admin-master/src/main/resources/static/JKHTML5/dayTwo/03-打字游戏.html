@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="animate.css" />
+</head>
+<style>
+    main {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 10px solid black;
+        background-color: rgb(0, 195, 255);
+    }
+
+    #code {
+        font-size: 360px;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 30px;
+    }
+    .error{
+        /* !important强制 */
+        color: red !important;
+    }
+</style>
+
+<body onkeyup="key(event)">
+    <main>
+        <div id="code">A</div>
+    </main>
+    <footer>
+        <div id="footer">这是一段优美的句子</div>
+    </footer>
+</body>
+<script type="text/javascript">
+    //定义一个保存随机字母的全局变量
+    var char;
+    var num1=0;
+    var num2=0;
+
+    //该方法用来随机显示字母用的
+    function showChar() {
+        //0到26之间随机数
+        var num = Math.random() * 26;
+        //向下取整0到26之间
+        var code = Math.floor(num);
+        //从26个字母中随机取出一个字母
+        //charAt根据索引在字符串中取出对应的字符
+        char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(code);
+        //根据ID获取元素
+        var div = document.getElementById('code');
+        div.innerText = char;
+    }
+    showChar();
+
+    function key(event) {
+        //监听键盘输入的内容，获取点击按键
+        // alert(event.key);
+        //将小写转换成大写
+        var key = event.key.toUpperCase();
+        //=赋值
+        //==比较两边是否一致
+        //===全等于
+        if (key == char) {
+            //alert("输入正确");
+            //如果输入正确就更换字母
+            showChar();
+            show(1);
+            var a = document.getElementById('true');
+            num1++;
+        } else {
+            //alert("输入错误");
+            show();
+            var a = document.getElementById('true');
+            num2++;
+        }
+        var r = (num1/(num1+num2))*100;
+        var footer=document.getElementById('footer');
+        footer.innerText='正确'+num1+'个，错误'+num2+'个；正确率'+r.toFixed(2)+'%';
+    }
+
+    function show(a) {
+        //找到现实字母的标签
+        var div = document.getElementById('code');
+        //设置class来执行动画库中的动画
+        if (a == 1) {
+            div.className = "animated zoomIn";
+            setTimeout(function () {
+                div.className = '';
+            }, 800);
+        } else {
+            div.className = "animated shake error";
+            //延迟执行 1延迟后要做的，2延迟的时间 单位毫秒
+            setTimeout(function () {
+                div.className = '';
+            }, 800);
+        }
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鲜花销售管理系统登录</title>
+    <link href="./css/login.css" type="text/css" rel="stylesheet"/>
+</head>
+<body onload="load()">
+<h1>鲜花销售管理系统</h1>
+<form action="login.php" method="post">
+    <table>
+        <tr>
+            <td id="tdTitle">管理员登录</td>
+        </tr>
+        <tr>
+            <td><label id="errorLabel"></label>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><input value="<?php echo $username; ?>" type="text" name="username" id="username" class="username"
+                       placeholder="管 理 员 名"/></td>
+        </tr>
+        <tr>
+            <td><input type="password" name="password" id="password" class="password" placeholder="密&nbsp;&nbsp;码"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="code" name="code" placeholder="验证码">
+                <img src="../common/image.php" onclick="changeCode()" title="点击图片更换验证码" id="imageCode"/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="sumbitBtn" id="submitBtn" value="登录"></td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script>
+    function changeCode() {
+        var image = document.getElementById("imageCode");
+        image.src = "../common/image.php";
+    }
+
+    function load() {
+        var username = document.getElementById('username');
+        var password = document.getElementById("password");
+        if (username.value == "") {
+            username.focus();
+        } else {
+            password.focus();
+        }
+    }
+
+    $("#submitBtn").click(function sumbitForm() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var code = $("#code").val();
+        if (username == "" || password == "" || code.length != 4) {
+            $("#errorLabel").html("用户名，密码不能为空,验证码不能少于4位！");
+            return false;
+        }
+        return true;
+    });
+</script>
+</body>
+</html>

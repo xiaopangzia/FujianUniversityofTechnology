@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鲜花管理</title>
+</head>
+<style>
+    iframe{
+        border:none;
+        width: 750px;
+        height: 600px;
+    }
+    table{
+        width: 100%;
+        text-align: center;
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
+<body onload="filter()">
+<h3 align="center">鲜花管理</h3>
+<table id="table">
+    <tr>
+        <td>
+            <a href="insert.html" target="mainBody">增加鲜花</a>
+        </td>
+        <td>
+            <a href="../../Controller/flower/query.php" target="mainBody">查询鲜花</a>
+        </td>
+    <tr>
+        <td colspan="3">
+            <iframe name="mainBody"></iframe>
+        </td>
+    </tr>
+</table>
+<script src="../../../js/jquery.js"></script>
+<script src="../../js/filter.js"></script>
+<script>
+    $('#table td').each(function(){
+        $(this).click(function(){
+            $(this).css("background-color","#BBBBBB");//设置点击td的颜色
+            $('#table td').not(this).css("background-color", "#DDDDDD");//设置其他td的颜色
+        });
+    });
+</script>
+</body>
+</html>

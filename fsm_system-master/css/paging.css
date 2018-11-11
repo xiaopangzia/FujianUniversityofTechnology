@@ -1,0 +1,36 @@
+.aPage{
+    border: 1px solid #999999;
+    background-color: #F1F1F1;
+    text-decoration: none;
+    color: #555555;
+}
+
+.aPage:hover,.aSubmit:hover{
+    background-color: #DDDDDD;
+}
+
+.page{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.span{
+    border: 2px solid #DDDDDD;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    color: #555555;
+}
+
+.inputPageCode {
+    width: 30px;
+    height: 20px;
+    border: 1px solid #999999;
+    font-size: 16px;
+}
+
+.aSubmit{
+    border: 1px solid #999999;
+    background-color: #F1F1F1;
+    text-decoration: none;
+    color: #555555;
+}

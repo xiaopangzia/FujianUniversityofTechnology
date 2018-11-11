@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订餐系统-系统登录</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="panel panel-default" style="width:450px;margin-left:auto;margin-right:auto;margin-top: 150px;">
+    <div class="panel-heading">系统登录</div>
+    <div class="panel-body">
+        <p th:text="${error}"></p>
+        <form method="post" id="login-form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="username">用户名</label>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" th:value="${username}" name="username" placeholder="请输入用户名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="password">密码</label>
+                <div class="col-md-6">
+                    <input class="form-control" th:value="${password}" type="password" name="password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="rememberMe"></label>
+                <div class="col-md-6">
+                    <input type="checkbox" name="rememberMe">记住我
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/bootstrap-table.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.js"></script>
+<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/localization/messages_zh.js"></script>
+<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#login-form").validate({
+            rules: {
+                username: {
+                    required: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            messages: {
+                username: {
+                    required: "请输入用户名"
+                },
+                password: {
+                    required: "请输入密码"
+                }
+            },
+            errorElement: 'em',
+            errorClass: 'help-block',
+            //自定义错误消息放到哪里
+            errorPlacement: function (error, element) {
+                element.closest('.form-group').append(error); //显示错误消息提示
+            },
+            //给未通过验证的元素进行处理
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error has-feedback');
+            },
+            //验证通过的处理
+            success: function (label) {
+                var el = label.closest('.form-group').find("input");
+                el.next().remove();
+                label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+                label.remove();
+            }
+        })
+    });
+</script>
+</body>
+</html>

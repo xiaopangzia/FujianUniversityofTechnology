@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    main{
+        width: 1000px;
+        height: 500px;
+        background: url("caodi.png") ;
+        background-size: 100% 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+    div{
+        background: url("fengche.png");
+        background-size: 100% 100%;
+        position: absolute;
+        /* 
+         * animation定义一个动画
+         * rotate动画名字
+         * 1.5s动画执行一次时间
+         * infinite无限次执行
+         * linear线性 匀速
+         */
+         /* animation: rotate 0.5s linear infinite; */
+    }
+    div:nth-of-type(1){
+        width: 325px;
+        height: 325px;
+        top: 53px;
+        left: 127px;
+        animation: rotate 0.5s linear infinite;
+    }
+    div:nth-of-type(2){
+        width: 125px;
+        height: 125px; 
+        top: 292px;
+        left: 453px;
+        animation: rotate 1.5s linear infinite;
+    }
+    div:nth-of-type(3){
+        width: 200px;
+        height: 200px;
+        top: 209px;
+        left: 603px;
+        animation: rotate 1s linear infinite;
+    }
+    @keyframes rotate{
+        0%{
+            transform: rotate(0);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<body>
+    <main>
+        <div></div>
+        <div></div>
+        <div></div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background-color: black;
+    }
+
+    main {
+        width: 800px;
+        height: 400px;
+        border: 20px solid #666;
+        border-radius: 30px;
+        background-image: url(notes/keys.png);
+        margin: 50px auto;
+        background-size: 100% 100%;
+    }
+
+    div {
+        width: calc(800px / 9);
+        height: 400px;
+        /* background-color: red; */
+        float: left;
+    }
+
+    div:active,.ss{
+        /* 线性变色 */
+        /* background:linear-gradient(rgba(37, 37, 37, 0),rgba(10, 10, 10, 0.5)); */
+        background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(150, 150, 150, 0.5));
+    }
+
+</style>
+
+<!-- <body onkeyup="key(event)"> -->
+<body>
+    <!-- <audio src="notes/1.mp3" autoplay="autoplay"></audio> -->
+    <audio src="notes/1.mp3"></audio>
+    <audio src="notes/2.mp3"></audio>
+    <audio src="notes/3.mp3"></audio>
+    <audio src="notes/4.mp3"></audio>
+    <audio src="notes/5.mp3"></audio>
+    <audio src="notes/6.mp3"></audio>
+    <audio src="notes/7.mp3"></audio>
+    <audio src="notes/8.mp3"></audio>
+    <audio src="notes/9.mp3"></audio>
+    <main>
+        <div onmousedown="play(0)"></div>
+        <div onmousedown="play(1)"></div>
+        <div onmousedown="play(2)"></div>
+        <div onmousedown="play(3)"></div>
+        <div onmousedown="play(4)"></div>
+        <div onmousedown="play(5)"></div>
+        <div onmousedown="play(6)"></div>
+        <div onmousedown="play(7)"></div>
+        <div onmousedown="play(8)"></div>
+    </main>
+</body>
+
+<script type="text/javascript">
+    //找到音乐标签
+    var audios = document.querySelectorAll("audio");
+    var div = document.querySelectorAll('div');
+    var audio;
+
+    function play(index) {
+
+        //当前被点击的索引
+        // alert(index);
+        //找到播放标签
+        audio = audios[index];
+        //加载音频
+        audio.load();
+        //播放音频
+        audio.play();
+    }
+
+    // function key(index) {
+    //     var key = index.key;
+    //     key--;
+    //     play(key);
+    //     var div = document.querySelectorAll('div');
+    //     div[key].className = "ss";
+    //     setTimeout(function () {
+    //         div[key].className = '';
+    //     }, 50);
+    // }
+
+    window.onkeydown = function (e) {
+        var key = e.keyCode;
+        if (key >= 49 && key <= 57) {
+            var index = key - 49;
+            play(index);
+            div[index].className = "ss";
+            // setTimeout(function () {
+            //     div[index].className = '';
+            // }, 50);
+        }
+    }
+
+    // 监听键盘按下后抬起
+    window.onkeyup=function(){
+        for(var i =0;i<div.length;i++){
+            div[i].className='';
+        }
+    }
+</script>
+
+</html>

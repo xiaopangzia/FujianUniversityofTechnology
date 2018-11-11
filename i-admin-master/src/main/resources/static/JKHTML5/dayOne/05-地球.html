@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 手机端 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="animate.css" type="text/css" rel="stylesheet"/>
+</head>
+<style>
+    html,body{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: yellow;
+    }
+    main{
+        width: 500px;
+        height: 400px;
+        background-color: green;
+        margin: 50px auto;
+        position: relative;
+    }
+    img{
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        left: calc((500px - 60px)/2);
+        animation: drop 4.5s 1 ease-in;
+        /* 让动画结束保留到结束位置 */
+        animation-fill-mode: both;
+        /* 动画延时执行 */
+        animation-delay: 2s;
+    }
+    @keyframes drop{
+        0%{
+            top: 0;
+        }
+        20%{
+            top: calc(100% - 60px);
+            /* 单独设置动画线性 */
+            animation-timing-function: ease-out;
+        }
+        40%{
+            top: 150px;
+            animation-timing-function: ease-in;
+        } 
+        60%{
+            top: calc(100% - 60px); 
+            animation-timing-function: ease-out;
+        }
+        80%{
+            top: 250px;
+        }
+        100%{
+            top: calc(100% - 60px); 
+        }
+    }
+</style>
+<body>
+    <main>
+        <img src="earth.png" alt="" />
+    </main>
+</body>
+</html>

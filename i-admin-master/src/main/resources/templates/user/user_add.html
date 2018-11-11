@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>订餐系统-添加用户</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="panel panel-default">
+    <div class="panel-heading">添加用户</div>
+    <div class="panel-body">
+        <form method="post" action="/user/add" role="form" id="data-form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="username">用户名</label>
+                <div class="col-md-5">
+                    <input class="form-control" type="text" name="username" placeholder="请输入用户名">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="name">姓名</label>
+                <div class="col-md-5">
+                    <input class="form-control" type="text" name="name" placeholder="请输入用户姓名">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="mobile">手机号</label>
+                <div class="col-md-5">
+                    <input class="form-control" type="text" name="mobile" placeholder="请输入用户姓名">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="password">密码</label>
+                <div class="col-md-5">
+                    <input class="form-control" type="password" name="password" id="password" placeholder="请输入密码">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="confirm_password">确认密码</label>
+                <div class="col-md-5">
+                    <input class="form-control" type="password" name="confirm_password" placeholder="请输入确认密码">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-11">
+                    <button type="submit" class="btn btn-default">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/bootstrap-table.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.js"></script>
+<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script src="https://cdn.bootcss.com/jquery-validate/1.17.0/localization/messages_zh.js"></script>
+<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.js"></script>
+<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#data-form").validate({
+            rules: {
+                username: {
+                    required: true,
+                    account: true
+                },
+                name: {
+                    required: true,
+                    minlength: 2
+                },
+                password: {
+                    required: true,
+                    minlength: 5
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: "#password"  //#要比较的表单的id
+                }
+            },
+            messages: {
+                username: {
+                    required: "用户名不能为空"
+                },
+                name: {
+                    required: "姓名不能为空",
+                    minlength: "姓名长度不能小于2个字符"
+                },
+                password: {
+                    required: "密码不能为空",
+                    minlength: "密码长度不能小于5个字符"
+                },
+                confirm_password: {
+                    required: "确认密码不能为空",
+                    equalTo: "两次密码输入不一致"
+                }
+            },
+            errorElement: 'em',
+            errorClass: 'help-block',
+            //自定义错误消息放到哪里
+            errorPlacement: function (error, element) {
+                element.closest('.form-group').append(error); //显示错误消息提示
+            },
+            //给未通过验证的元素进行处理
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error has-feedback');
+            },
+            //验证通过的处理
+            success: function (label) {
+                var el = label.closest('.form-group').find("input");
+                el.next().remove();
+                label.closest('.form-group').removeClass('has-error').addClass("has-feedback has-success");
+                label.remove();
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

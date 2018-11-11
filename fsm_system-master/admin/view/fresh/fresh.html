@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布信息</title>
+</head>
+<style>
+    table{
+        margin: 200px auto;
+    }
+</style>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<h3 align="center">公告板管理</h3>
+<form method="post" action="../../Controller/fresh/fresh.php" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>
+                发布时间
+            </td>
+            <td>
+                <input type="date" name="date" value="时间">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容
+            </td>
+            <td>
+                <textarea rows="5" name="text" cols="17"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片
+            </td>
+            <td>
+                <input type="file" name="file"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <input type="submit" value="提交"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

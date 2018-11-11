@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    div{
+        width: 500px;
+        height: 500px;
+        margin: 50px auto;
+        border: 1px solid red;
+        position: relative;
+    }
+    span{
+        background-color: blue;
+        /*
+         * 绝对定位会使元素脱离文档流
+         * 绝对定位先看自身父级元素是否有设置定位
+         * 如果有就相对父级进行定位，如果没有就找
+         * 父级的父级，看看其有没有设置定位，如果有
+         * 就继续
+         */
+        position: absolute;
+        width: 90px;
+        height: 30px;
+    }
+    span:nth-of-type(2){
+        right: 0;
+    }
+    span:nth-of-type(3){
+        bottom: 0;
+    }
+    span:nth-of-type(4){
+        right: 0;
+        bottom: 0;
+    }
+    span:nth-of-type(5){
+        /* 运算左右两边加空格 */
+        left: calc((500px - 90px)/2);
+        top: calc((500px - 20px)/2);
+    }
+</style>
+<body>
+    <div>
+        <span>第1个span</span>
+        <span>第2个span</span>
+        <span>第3个span</span>
+        <span>第4个span</span>
+        <span>第5个span</span>
+    </div>
+</body>
+</html>

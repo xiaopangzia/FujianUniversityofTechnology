@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询鲜花</title>
+</head>
+<style>
+    #flowerName {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    #submit {
+        font-size: 20px;
+        vertical-align:bottom;
+    }
+
+    form{
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    #searchFlower{
+        height: 40px;
+        line-height: 40px;
+        font-size: 30px;
+        vertical-align:bottom;
+    }
+
+
+</style>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<input id="search" type="button" value="按状态查询">
+<form id="form1" action="../../Controller/flower/query.php" method="post">
+    <input style="padding-left: 10px" type="text" id="flowerName" name="flowerName" placeholder="鲜花名">
+    <input type="submit" id="submit" value="查询">
+</form>
+<form id="form2" style="display: none" action="../../Controller/flower/query.php" method="post">
+    <select style="height: 30px" id="searchStatus" name="status">
+        <option value="0">在售</option>
+        <option value="1">缺货</option>
+        <option value="2">下架</option>
+    </select>
+    <input type="submit" value="查询" />
+</form>
+</body>
+<script src="../../../js/jquery.js"></script>
+<script>
+    var click = 0;
+    $("#search").click(function () {
+        if (click % 2 == 0) {
+            $("#form1").hide();
+            $("#form2").show();
+            this.value = "按鲜花名查询";
+        }else{
+            $("#form2").hide();
+            $("#form1").show();
+            this.value = "按状态查询";
+        }
+        click++;
+    });
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>left</title>
+</head>
+<style>
+    a {
+        font-size: 30px;
+        text-decoration: none;
+        color: #333333;
+    }
+    table{
+        text-align: center;
+        width: 190px;
+    }
+    body{
+        background-color: #DDDDDD;
+    }
+</style>
+<body>
+<div>
+    <table id="table">
+        <tr>
+            <td>
+                <a href="../Controller/body.php" target="body">首&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="../Controller/user/user.php" target="body">用户管理</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="../Controller/order/order.php" target="body">订单管理</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="flower/flower.html" target="body">鲜花管理</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="./fresh/fresh.html" target="body">公&nbsp;&nbsp;告&nbsp;&nbsp;板</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="../../js/jquery.js"></script>
+<script>
+    $('#table td').each(function(){
+        $(this).click(function(){
+            $(this).css("background-color","#BBBBBB");//设置点击td的颜色
+            $('#table td').not(this).css("background-color", "#DDDDDD");//设置其他td的颜色
+        });
+    });
+</script>
+</body>
+</html>

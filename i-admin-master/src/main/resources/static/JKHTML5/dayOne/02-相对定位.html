@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    div{
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+    }
+    span{
+        background-color: blue;
+        /*
+         *相对定位是相对自身原有位置进行调整
+         *相对定位通常会用在细微调整时（微调用）
+         */
+        position: relative;
+    }
+    span:nth-of-type(3){
+        top: 30px;
+    }
+</style>
+<body>
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+    </div>
+</body>
+</html>

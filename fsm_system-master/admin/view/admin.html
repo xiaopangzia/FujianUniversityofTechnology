@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link href="./css/admin.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div class="divTitle">
+    <h2>鲜花销售后台管理系统</h2>
+    <p class="pTitle">
+        <span>您 好：<?=$username?>&nbsp;&nbsp;&nbsp;</span>
+        <span id="date"></span>&nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="admin.php?action=exitSession">退 出</a>
+        </span>
+    </p>
+</div>
+<table>
+    <tr>
+        <td id="left">
+            <iframe src="./view/left.html" name="left"></iframe>
+        </td>
+        <td id="body">
+            <iframe src="Controller/body.php" name="body"></iframe>
+        </td>
+    </tr>
+</table>
+
+</body>
+<script src="../js/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        setInterval(function() {
+            var datetime = document.getElementById("date");
+            var nowtime=new Date();
+            var year=nowtime.getFullYear();
+            var month=nowtime.getMonth()+1;
+            var date=nowtime.getDate();
+            datetime.innerText=year+"/"+month+"/"+date+"/  "+nowtime.toLocaleTimeString();
+        }, 1000);
+    })
+</script>
+</html>

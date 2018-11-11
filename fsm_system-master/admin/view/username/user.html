@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+</head>
+<script src="../../js/filter.js"></script>
+<style>
+    #uname {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    #submit {
+        font-size: 20px;
+        vertical-align:bottom;
+    }
+
+    form{
+        margin: 0 auto;
+        text-align: center;
+    }
+
+</style>
+<body onload="filter()">
+<h3 align="center">用户管理</h3>
+<form id="form" action="user.php" method="post">
+    <input id="uname" type="text" name="uname" placeholder="用户名">
+    <input id="sumbit" type="submit" value="搜索"/>
+</form>
+</body>
+<script src="../../../js/jquery.js"></script>
+</html>

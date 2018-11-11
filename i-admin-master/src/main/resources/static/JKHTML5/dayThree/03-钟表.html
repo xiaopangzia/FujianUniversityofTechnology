@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    html,
+    body {
+        /* 默认是没有高度的 */
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        background-image: url(notes/1.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+    }
+
+    #dot {
+        width: 20px;
+        height: 20px;
+        background-color: black;
+        border-radius: 50%;
+        /* 绝对定位 */
+        position: absolute;
+        top: calc((100% - 20px) / 2);
+        left: calc((100% - 20px) / 2);
+        z-index: 1;
+    }
+
+    span {
+        border-radius: 5px;
+    }
+
+    #seconds {
+        width: 6px;
+        height: 400px;
+        position: absolute;
+        /* background-color: red; */
+        top: calc((100% - 400px) / 2);
+        left: calc((100% - 6px) / 2);
+        animation: rotate 60s infinite linear;
+    }
+
+    #seconds span {
+        display: block;
+        width: 6px;
+        height: 250px;
+        background-color: blue;
+
+    }
+
+    #minute {
+        width: 10px;
+        height: 400px;
+        position: absolute;
+        /* background-color: red; */
+        top: calc((100% - 400px) / 2);
+        left: calc((100% - 10px) / 2);
+        animation: rotate 3600s infinite linear;
+    }
+
+    #minute span {
+        display: block;
+        width: 10px;
+        height: 200px;
+        background-color: green;
+        /* margin外边距 */
+        /* padding内边距 */
+        margin-top: 50px;
+    }
+
+    #hour {
+        width: 15px;
+        height: 400px;
+        position: absolute;
+        /* background-color: red; */
+        top: calc((100% - 400px) / 2);
+        left: calc((100% - 15px) / 2);
+        animation: rotate 43200s infinite linear;
+    }
+
+    #hour span {
+        display: block;
+        width: 15px;
+        height: 150px;
+        background-color: black;
+        margin-top: 100px;
+
+    }
+
+    @keyframes rotate {
+        form {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<body>
+    <!-- 中心黑点 -->
+    <div id="dot"></div>
+    <div id="hour">
+        <span></span>
+    </div>
+    <div id="minute">
+        <span></span>
+    </div>
+    <!-- 秒针 -->
+    <div id="seconds">
+        <span></span>
+    </div>
+</body>
+<script type="text/javascript">
+    function showTime() {
+        var time = new Date();
+        var hour = time.getHours() > 12 ? time.getHours() - 12 : time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+        var hourDiv = document.getElementById('hour');
+        // hourDiv.style.animationDelay=-hour+hour;
+        // hourDiv.style.transform="rotate("+(hour/12*360+(minute/60)*30)+"deg)";
+        // var minuteDiv= document.getElementById('minute');
+        // minuteDiv.style.transform="rotate("+(minute/60)*360+"deg)";
+        // secondDiv.style.transform="rotate("+(second/60)*360+"deg)";
+        // animationDelay延迟执行
+        var secondDiv = document.getElementById('seconds');
+        secondDiv.style.animationDelay = -second + 's';
+        var minuteDiv = document.getElementById('minute');
+        minuteDiv.style.animationDelay = -minute * 60 + 's';
+        hourDiv.style.animationDelay = -minute + hour;
+        hourDiv.style.animationDelay = (-hour * 60 * 60) + (-minute * 60) - second + 's';
+    }
+    showTime();
+</script>
+
+</html>

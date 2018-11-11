@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<h3 align="center">订单信息</h3>
+<table width="100%">
+    <?php while($row=mysqli_fetch_assoc($result)) :?>
+    <tr>
+        <td><img src="../flower/<?=$row['fimg']?>" width="50px" height="50px"/></td>
+        <td><?=$row['fname']?></td>
+        <td>单价：<?=$row['fprice']?>元&nbsp;&nbsp;&nbsp;</td>
+        <td>数量：<?=$row['num']?>只&nbsp;&nbsp;&nbsp;</td>
+        <td>总价：<?=$row['subtotal']?>元&nbsp;&nbsp;&nbsp;</td>
+    </tr>
+    <?php endwhile;?>
+</table>
+<?php $ro=mysqli_fetch_assoc($res)?>
+<?php
+        $statusNum=$ro['ostatus'];
+        if($statusNum==0){ $status="未付款"; }
+        if($statusNum==1){ $status="已付款"; }
+        if($statusNum==2){ $status="已配送"; }
+        if($statusNum==3){ $status="已收货"; }
+        if($statusNum==4){ $status="已取消"; }
+?>
+<div style="float: right;margin-right: 50px">
+    <div id="divMsg">
+        <p>地址：<?=$ro['oaddr']?></p>
+        <p>总价：<?=$ro['ototal']?></p>
+        <p>状态：<?=$status?></p>
+    </div>
+    <form id="form" style="display: none" method="post">
+        地址：<input name="address" type="text" value="<?=$ro['oaddr']?>"/></input>
+        <input type="submit" value="提交修改"/>
+    </form>
+    <p><input type="button" value="修改地址" id="button" /></p>
+    <p><a href="javascript:history.go(-1)">返回上一页</a></p>
+    <input id="stautsHidden" type="hidden" value="<?=$ro['ostatus']?>">
+</div>
+
+</body>
+<script src="../../../js/jquery.js"></script>
+<script>
+    if ($("#stautsHidden").val() == 0 || $("#stautsHidden").val() == 1) {
+        $("#button").show();
+    }else {
+        $("#button").hide();
+    }
+    var numClick = 0;
+    $("#button").click(function () {
+        if (numClick %2 == 0) {
+            $("#divMsg").hide();
+            this.value = "退出修改";
+            $("#form").show();
+        }else {
+            $("#form").hide();
+            $("#divMsg").show();
+            this.value = "修改地址";
+        }
+        numClick++;
+    });
+</script>
+</html>

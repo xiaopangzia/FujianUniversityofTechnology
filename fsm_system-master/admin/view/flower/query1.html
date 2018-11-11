@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #flower {
+        width: 100%;
+        height: 30px;
+        margin-top: 16px;
+        line-height: 30px;
+    }
+
+    #updateFlower {
+        float: right;
+        padding-right: 30px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+
+    }
+
+</style>
+<body>
+
+<table>
+    <tr>
+        <td width="10%">鲜花名</td>
+        <td width="10%">鲜花单价</td>
+        <td width="10%">鲜花数量</td>
+        <td width="10%">鲜花状态</td>
+        <td width="50%">鲜花信息</td>
+        <td width="10%">操作</td>
+    </tr>
+
+    <?php while($row=mysqli_fetch_assoc($result)) :?>
+    <?php
+        if($row['fstatus']==0){ $status='在售'; }
+        elseif($row['fstatus']==1){ $status='缺货'; }
+        else{ $status='下架'; }
+    ?>
+    <tr id="flower">
+        <td><?=$row['fname']?></td>
+        <td><?=$row['fprice']?></td>
+        <td><?=$row['fnum']?></td>
+        <td><?=$status?></td>
+        <td><?=$row['fmes']?></td>
+        <td><a id="updateFlower" href="update.php?id=<?=$row['id']?>" target="mainBody">修改</a></td>
+    </tr>
+    <?php endwhile; ?>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+body{
+    background-color: rgba(223,223,223,0.56);
+    width: 1060px;
+    margin: 30px auto;
+}
+
+.rightOne {
+    width: 715px;
+    height: 220px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.divRight {
+    margin-left: 730px;
+    width: 330px;
+    height: 1230px;
+    background-color: #FFFFFF;
+}
+
+.divLeft{
+    float: left;
+    width: 715px;
+}
+
+.imgLeft {
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+}
+
+.divContent{
+    width: 485px;
+    height: 180px;
+    padding-top: 10px;
+    margin-left: 230px;
+    font-size: 27px;
+    word-break: break-all;
+    word-wrap:break-word;
+    overflow:hidden;
+}
+
+.aPage{
+    border: 1px solid #999999;
+    background-color: #999999;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #555555;
+}
+
+.aPage:hover,.aSubmit:hover{
+    background-color: #DDDDDD;
+}
+
+.divPage{
+    width: 715px;
+    height: 60px;
+    background-color: #FFFFFF;
+}
+
+.page{
+    float: right;
+    height: 70px;
+    line-height: 70px;
+    padding-right: 10px;
+}
+
+.span{
+    border: 2px solid #DDDDDD;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #555555;
+}
+
+.inputPageCode {
+    border: 1px solid #999999;
+    width: 50px;
+    height: 25px;
+    font-size: 16px;
+}
+
+.aSubmit {
+    border: 1px solid #999999;
+    background-color: #F1F1F1;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #555555;
+}
+
+.date {
+    height: 20px;
+    float: right;
+    padding-right: 10px;
+}

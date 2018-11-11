@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 174, 255);
+        /* 视距 */
+        perspective: 3000px;
+        /* 观测点 */
+        perspective-origin: 50% 80%; 
+    }
+
+    main {
+        width: 300px;
+        height: 300px;
+        margin: 300px auto;
+        /* 开启3D */
+        transform-style: preserve-3d;
+        /* transform: rotateX(-10deg) rotateY(10deg); */
+        animation: rotate 50s linear infinite;
+    }
+
+    div {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: red;
+        opacity: 0.8;
+    }
+
+    .font{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/C4BF77FF98C749018A84E956790BF2A8.png);
+        transform: translateZ(150px);
+    }
+
+    .back{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/D4837DD60E8141B992644ED743C29996.png);
+        transform: translateZ(-150px);
+    }
+
+    .left{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/D0455027DAD645C1B87DA32EB3A4194A.png);
+        transform: rotateY(90deg) translateZ(-150px);
+    }
+
+    .right{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/E987A4319C1449A9A758B538C7E2F6D1.png);
+        transform: rotateY(90deg) translateZ(150px);
+    }
+
+    .top{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/3F8A74DE3B40410A8044A41278870F65.png);
+        transform: rotateX(90deg) translateZ(150px);
+    }
+
+    .bottom{
+        background-image: url(http://p9zrb5mmx.bkt.clouddn.com/ADD483FDDC874370869B6F97354036A2.png);
+        transform: rotateX(90deg) translateZ(-150px);
+    }
+    @keyframes rotate{
+        0%{
+            transform: rotateX(0) rotateY(0);
+        }
+        100%{
+            transform: rotateX(360deg) rotateY(360deg);
+        }
+    }
+</style>
+
+<body>
+    <main>
+        <div class="font"></div>
+        <div class="back"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="top"></div>
+        <div class="bottom"></div> 
+    </main>
+</body>
+
+</html>

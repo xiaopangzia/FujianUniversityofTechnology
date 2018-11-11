@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #ccc;
+    }
+
+    header {
+        background-image: url(img/nav-bg.png);
+        position: relative;
+        height: 55px;
+        width: 1920px;
+    }
+
+    header div:nth-of-type(1) {
+        position: absolute;
+        left: 330px;
+        cursor: pointer;
+    }
+
+    header div:nth-of-type(2) {
+        position: absolute;
+        left: 560px;
+        line-height: 55px;
+    }
+
+    header div:nth-of-type(2) span {
+        display: inline-block;
+        padding-left: 15px;
+        padding-right: 15px;
+        cursor: pointer;
+        height: 45px;
+    }
+
+    header div:nth-of-type(3) {
+        position: absolute;
+        right: 300px;
+        line-height: 55px;
+    }
+
+    header div:nth-of-type(3) input {
+        border-radius: 50px;
+        padding-left: 10px;
+        /* user-select: none;
+        -webkit-user-select: none; */
+        outline: none;
+        font-size: 20px;
+    }
+
+    .bottom {
+        border-bottom: 3px solid blue;
+    }
+
+    main #banner {
+        background: url("img/banner.png");
+        width: 1920px;
+        height: 480px;
+    }
+
+    main #imformation {
+        background-color: rgb(224, 224, 216);
+        height: 380px;
+        width: 1920px;
+        position: relative;
+    }
+
+    main #imformation #left {
+        width: 400px;
+        height: 390px;
+        border-radius: 3px;
+        position: absolute;
+        top: -25px;
+        left: calc((1920px - 400px)/2 - 420px);
+        background-color: #fff;
+    }
+
+    main #imformation #center {
+        width: 400px;
+        height: 390px;
+        border-radius: 3px;
+        position: absolute;
+        top: -25px;
+        left: calc((1920px - 400px)/2);
+        background-color: #fff;
+    }
+
+    main #imformation #right {
+        width: 400px;
+        height: 390px;
+        border-radius: 3px;
+        position: absolute;
+        top: -25px;
+        left: calc((1920px - 400px)/2 + 420px);
+        background-color: #fff;
+    }
+
+    main #imformation div #titleSpan {
+        color: #fff;
+        height: 25px;
+        line-height: 25px;
+        padding-left: 10px;
+        display: inline-block;
+        width: 390px;
+    }
+
+    main #imformation #left #titleSpan,
+    main #imformation #right span {
+        background: url("img/s-bg1.png");
+    }
+
+    main #imformation #center span {
+        background: url("img/s-bg2.png");
+    }
+
+    main #imformation #left h4 {
+        position: absolute;
+        top: 8px;
+        left: 127px;
+        font-size: 19px;
+    }
+
+    main #imformation #left #content P:nth-of-type(1) {
+        font-size: 19px;
+        position: absolute;
+        width: 270px;
+        top: 45px;
+        left: 127px;
+    }
+
+    main #imformation #left #content P:nth-of-type(2) {
+        font-size: 19px;
+        position: absolute;
+        width: 287px;
+        top: 150px;
+        left: 250px;
+        cursor: pointer;
+    }
+
+    main #imformation #left img {
+        width: 115px;
+        height: 110px;
+        float: left;
+        padding: 8px;
+    }
+
+    main #imformation #msg {
+        position: absolute;
+        font-size: 15px;
+        color: rgb(172, 167, 167);
+        width: 400px;
+        height: 130px;
+    }
+
+    main #imformation #msg p {
+        width: 100%;
+        cursor: pointer;
+    }
+
+    main #imformation #left #msg span:nth-of-type(1) {
+        padding-left: 10px;
+    }
+
+    main #imformation #left #msg span:nth-of-type(2) {
+        float: right;
+        padding-right: 20px;
+    }
+    main #imformation #center{
+        position: relative;
+        font-size: 19px;
+    }
+   
+    main #imformation #center #up h4{
+        position: absolute;
+        top: 9px;
+        left: 7px;
+    }
+
+    main #imformation #center #up p:nth-of-type(1){
+        position: absolute;
+        width: 97%;
+        top: 45px;
+        left: 8px;
+    }
+
+    main #imformation #center #up p:nth-of-type(2){
+        position: absolute;
+        top: 152px;
+        left: 250px;
+        cursor: pointer;
+        width: 100%;
+    } 
+
+    main #imformation #center hr{
+        position: absolute;
+        top: 190px;
+        left: 8px;
+    }
+
+    main #imformation #center #down h4{
+        position: absolute;
+        top: 185px;
+        left: 7px;
+    }
+
+    main #imformation #center #down p:nth-of-type(1){
+        position: absolute;
+        width: 97%;
+        top: 220px;
+        left: 7px;
+    }
+
+    main #imformation #center #down p:nth-of-type(2){
+        position: absolute;
+        top: 330px;
+        left: 250px;
+        cursor: pointer;
+        width: 100%;
+    } 
+
+    main #imformation #right img{
+        width: 380px;
+        height: 150px;
+        padding: 9px;
+    }
+
+    main #imformation #right button{
+        width: 178px;
+        height: 50px;
+        margin: 15px 9px;
+        font-size: 20px;
+        background-color: #ccc;
+        text-align: center;
+
+    }
+    footer {
+        width: 1920px;
+        background-color: #fff;
+        position: relative;
+        height: 45px;
+        line-height: 45px;
+    }
+
+    footer div:nth-of-type(1) {
+        position: absolute;
+        color: rgb(202, 192, 192);
+        left: 345px;
+    }
+
+    footer div:nth-of-type(2) {
+        position: absolute;
+        line-height: 55px;
+        right: 350px;
+    }
+
+    footer div:nth-of-type(2) span {
+        cursor: pointer;
+        padding-left: 20px;
+        line-height: 50px;
+        color: rgb(202, 192, 192);
+    }
+</style>
+
+<body>
+    <header>
+        <div id="logo">
+            <img src="img/logo.png" alt="">
+        </div>
+        <div id="title">
+            <span class="bottom">首页</span>
+            <span>媒体中心</span>
+            <span>关于我们</span>
+            <span>业务模块</span>
+            <span>产品服务</span>
+        </div>
+        <div id="search">
+            <input type="text" placeholder="Search here...">
+        </div>
+    </header>
+    <main>
+        <div id="banner"></div>
+        <div id="imformation">
+            <div id="left">
+                <span id="titleSpan">公司动态</span>
+                <div id="fcontent" style="height: 165px;">
+                    <div>
+                        <img src="img/news.png" />
+                    </div>
+                    <div id="content">
+                        <h4>政府部门参观研发中心</h4>
+                        <p>5月18日，一场盛大的创维酷开手机品牌启动暨新品发布经销大会在深圳手石岩隆重召开...</p>
+                        <p>READ MORE>></p>
+                    </div>
+                </div>
+                <hr style="border: 1px dashed #ccc; width: 95%;" />
+                <div id="msg">
+                    <p>
+                        <span>兰新高铁新疆段工程供应钢材逾七十吨</span>
+                        <span>2012-12-20</span>
+                    </p>
+                    <p>
+                        <span>兰新高铁新疆段工程供应钢材逾七十吨</span>
+                        <span>2012-12-20</span>
+                    </p>
+                    <p>
+                        <span>兰新高铁新疆段工程供应钢材逾七十吨</span>
+                        <span>2012-12-20</span>
+                    </p>
+                </div>
+            </div>
+            <div id="center">
+                <span id="titleSpan">研究与观点</span>
+                <div id="contentDiv">
+                    <div id="up">
+                        <h4>鲲鹏财富：地方政府经济发展金融服务</h4>
+                        <p>
+                            主做政府项目，只做浙江发达地区政府项目，只和信用良承诺。 从2009年创业开始，鲲鹏财富鲲鹏财富鲲鹏财富鲲鹏财富鲲鹏财富 鲲鹏财富鲲鹏财富鲲鹏财富...
+                        </p>
+                        <p>READ MORE>></p>
+                    </div>
+                    <hr style="border: 1px dashed #ccc; width: 95%;" />
+                    <div id="down">
+                        <h4>鲲鹏财富：地方政府经济发展金融服务</h4>
+                        <p>
+                            主做政府项目，只做浙江发达地区政府项目，只和信用良承诺。 从2009年创业开始，鲲鹏财富鲲鹏财富鲲鹏财富鲲鹏财富鲲鹏财富 鲲鹏财富鲲鹏财富鲲鹏财富...
+                        </p>
+                        <p>READ MORE>></p>
+                    </div> 
+                </div>
+            </div>
+            <div id="right">
+                <span id="titleSpan">产品与服务</span>
+                <div>
+                    <div><img src="img/service.png" alt=""></div>
+                    <div>
+                        <button>> 碳钢系列</button>
+                        <button>> 特钢系列</button>
+                        <button>> 不锈钢系列</button>
+                        <button>> 硅钢系列</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div>Copyright 2004-2012,Seethru Co,Ltd. All right reserved</div>
+        <div>
+            <span>网站地图</span>
+            <span>关于宝钢</span>
+            <span>工作机会</span>
+            <span>法律声明</span>
+            <span>友情链接</span>
+        </div>
+    </footer>
+</body>
+<script src="jquery-3.1.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#title span').click(function () {
+        var num = $(this).index();
+        $(this).addClass('bottom').siblings().removeClass();
+    });
+</script>
+
+</html>

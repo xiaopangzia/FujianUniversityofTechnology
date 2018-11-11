@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改鲜花</title>
+</head>
+<script src="../../js/filter.js"></script>
+
+<body onload="filter()">
+<h4 align="center">修改鲜花</h4>
+<form method="post" action="">
+    <table style="margin: 0 auto">
+        <tr>
+            <td>
+                鲜&nbsp;&nbsp;花&nbsp;&nbsp;名：
+            </td>
+            <td>
+                <input type="text" name="fname" value="<?=$row['fname']?>"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                鲜花信息：
+            </td>
+            <td>
+                <input type="text" name="fmes" value="<?=$row['fmes']?>"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                鲜花价格：
+            </td>
+            <td>
+                <input type="text" name="fprice" value="<?=$row['fprice']?>"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                鲜花数量：
+            </td>
+            <td>
+                <input type="number" name="fnum" value="<?=$row['fnum']?>"/>
+            </td>
+        </tr>
+        <tr>
+            <td>鲜花状态</td>
+            <td>
+                <select id="fstatus" name="fstatus">
+                    <option value="0" <?php if($row['fstatus']=='0')echo "selected";?> >在售</option>
+                    <option value="1" <?php if($row['fstatus']=='1')echo "selected";?> >缺货</option>
+                    <option value="2" <?php if($row['fstatus']=='2')echo "selected";?> >下架</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <img id="img" style="margin-left: 48px;" width="200px";height=“200px; src="./<?=$row['fimg']?>">
+                <a href="../../Controller/flower/updateImg.php?id=<?=$row['id']?>&img=<?=$row['fimg']?>">修改图片</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input style="width: 300px;height: 50px;" type="submit" value="修改">
+                <a href="javascript:history.go(-1);">上一页</a>
+            </td>
+        </tr>
+    </table>
+</form>
+<script src="../../../js/jquery.js"></script>
+<script>
+
+</script>
+</body>
+</html>

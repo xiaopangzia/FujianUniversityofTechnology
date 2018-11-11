@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订餐系统-商品信息</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="panel panel-default">
+    <div class="panel-heading">商品信息</div>
+    <div class="panel-body">
+        <!--新增链接-->
+        <a class="btn btn-primary" href="/product/add" style="margin-bottom: 5px">新增</a>
+        <!--列表模板-->
+        <table class="table table-bordered" style="margin-top: 5px;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品图片</th>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product:${product}">
+                <td th:text="${product.id}"></td>
+                <td>
+                    <img th:src="${product.image}"/>
+                </td>
+                <td th:text="${product.name}">葱花炒蛋</td>
+                <td th:text="${product.price}">￥20</td>
+                <th><a href="" th:href="@{/product/delete/{id}(id=${product.id})}">删除</a></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

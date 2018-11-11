@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+
+    }
+</style>
+<script src="../../js/filter.js"></script>
+<body onload="filter()">
+<table>
+    <tr id="tr">
+        <td>订单编号</td>
+        <td width="150px">订单时间</td>
+        <td>所属用户</td>
+        <td>订单金额</td>
+        <td>订单状态</td>
+        <td>操作</td>
+    </tr>
+    <?php while($row=mysqli_fetch_assoc($result)) :?>
+    <?php
+        $statusNum=$row['ostatus'];
+        if($statusNum==0){ $status="未付款"; }
+        if($statusNum==1){ $status="已付款"; }
+        if($statusNum==2){ $status="已配送"; }
+        if($statusNum==3){ $status="已收货"; }
+        if($statusNum==4){ $status="已取消"; }
+    ?>
+    <tr>
+        <td><?=$row['oid']?></td>
+        <td><?=$row['otime']?></td>
+        <td><?=$row['uname']?></td>
+        <td><?=$row['ototal']?></td>
+        <td><?=$status?></td>
+        <td><a href="../../Controller/order/orderMsg.php?oid=<?=$row['oid']?>">查看</a></td>
+    </tr>
+    <?php endwhile; ?>
+</table>
+</body>
+</html>

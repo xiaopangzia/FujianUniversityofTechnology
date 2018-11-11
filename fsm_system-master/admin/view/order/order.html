@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+</head>
+<script src="../../js/filter.js"></script>
+<style>
+    #search {
+        width: 200px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    #type {
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+        vertical-align:bottom;
+    }
+
+    #submit {
+        font-size: 20px;
+        height: 30px;
+        line-height: 30px;
+        vertical-align:bottom;
+    }
+
+    form{
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
+<body onload="filter()">
+<h3 align="center">订单管理</h3>
+<form action="../../Controller/order/order.php" method="post">
+    <select id="search" name="search">
+        <option value="0">按用户查询</option>
+        <option value="1">按订单号查询</option>
+        <option value="2">按时间查询</option>
+    </select>
+    <input id="type" type="text" name="searchText"/>
+    <input id="submit" type="submit" value="搜索"/>
+</form>
+</body>
+<script src="../../../js/jquery.js"></script>
+<script>
+    $("#search").click(function () {
+        if (this.value == 2) {
+            $("#type").prop("type", "date");
+        }
+        if(this.value == 1){
+            $("#type").prop("type", "number");
+        }
+        if (this.value == 0) {
+            $("#type").prop("type", "text");
+        }
+    });
+</script>
+</html>

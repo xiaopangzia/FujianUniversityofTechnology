@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table width="100%" align="center">
+    <tr>
+        <td width="5%">编号</td>
+        <td width="10%">用户名</td>
+        <td width="15%">生日</td>
+        <td width="10%">性别</td>
+        <td width="65%">地址</td>
+    </tr>
+    <?php while($row = mysqli_fetch_assoc($result)) :?>
+    <tr>
+        <td><?=$row['uid']?></td>
+        <td><?=$row['uname']?></td>
+        <td><?=$row['date']?></td>
+        <td><?=$row['sex']?></td>
+        <td><?=$row['address']?></td>
+    </tr>
+    <?php endwhile; ?>
+</table>
+</body>
+</html>

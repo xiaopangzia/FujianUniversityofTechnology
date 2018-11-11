@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .content {
+        width: 520px;
+        height: 280px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .content .pic a {
+        position: absolute;
+        /* 隐藏所有图片 */
+        display: none;
+    }
+
+
+    .content .pic a.current {
+        /* 轮播图显示其中一张 */
+        display: block;
+    }
+
+    .content .indicator {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        color: #ffffff;
+    }
+
+    .content .indicator span {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: green;
+        text-align: center;
+        line-height: 20px;
+        margin-left: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 50%;
+        user-select: none;
+        -moz-user-select: -moz-none;
+    }
+
+    .content .indicator span.active {
+        background-color: red;
+        border: 1px solid blue;
+    }
+
+    .content .page {
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
+        color: #ffffff;
+    }
+
+    .content .page span {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: rgba(100, 100, 100, 0.7);
+        font-style: 30px;
+        text-align: center;
+        line-height: 23px;
+        margin-left: 10px;
+        cursor: pointer;
+        user-select: none;
+        -moz-user-select: -moz-none;
+    }
+
+    .content .page span:hover {
+        background-color: rgba(100, 100, 100, 0.97);
+    }
+</style>
+
+<body>
+    <div class="content">
+        <div class="pic">
+            <a class="current" href="">
+                <img src="img/1.jpg" alt="" />
+            </a>
+            <a href="">
+                <img src="img/2.jpg" alt="" />
+            </a>
+            <a href="">
+                <img src="img/3.jpg" alt="" />
+            </a>
+            <a href="">
+                <img src="img/4.jpg" alt="" />
+            </a>
+            <a href="">
+                <img src="img/5.jpg" alt="" />
+            </a>
+        </div>
+        <div class="indicator">
+            <span class="active">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+        <div class="page">
+            <span class="prev">&lt;</span>
+            <span class="next">&gt;</span>
+        </div>
+    </div>
+</body>
+<script src="jquery-3.1.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+    // 记录当前图片是第几张
+    // 记录的是图片索引值
+    var index = 0;
+
+    // 上一张
+    function prevImg() {
+        index = index == 0 ? $('.content .pic a').length - 1 : index - 1;
+        if (index < 0) {
+            index = 4;
+        }
+        showImg();
+
+    }
+
+    // 下一张
+    function nextImg() {
+        index = index == $('.content .pic a').length - 1 ? 0 : index + 1;
+        showImg();
+    }
+
+    // 显示图片
+    function showImg() {
+        // if(index>4){
+        //     index=0;
+        // }
+        // eq根据索引在所有图片中取出对应的a标签
+        // show（）将元素显示出来，会改变display属性
+        // siblings 找到同级除了自身的其他标签
+        // hide（）将元素隐藏 display：none
+        $('.content .pic a').eq(index).show().siblings().hide();
+        // addClass 添加一个class removeClass移除一个class
+        $('.content .indicator span').eq(index).addClass('active').siblings().removeClass('active');
+    }
+    // 自动轮播的方法
+    var timer = setInterval(nextImg, 2000);
+    // 鼠标进入的方法
+    $('.content .page span').hover(function () {
+        // 取消轮播事件
+        clearInterval(timer);
+    }, function () {
+        // 鼠标离开方法
+        timer = setInterval(nextImg, 2000);
+    });
+
+    // 下一张的点击事件
+    $('.content .page .next').click(function () {
+        nextImg();
+    });
+
+    // 上一张点击事件
+    $('.content .page .prev').click(function () {
+        prevImg();
+    });
+
+    // 悬停到序号时的事件
+    $('.content .indicator span').hover(function () {
+        clearInterval(timer);
+        index = $(this).index();
+        showImg();
+    }, function () {
+        timer = setInterval(nextImg, 2000);
+    });
+</script>
+
+</html>

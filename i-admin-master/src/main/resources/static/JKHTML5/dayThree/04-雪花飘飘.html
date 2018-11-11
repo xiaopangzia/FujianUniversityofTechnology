@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(blue, pink, black);
+        overflow: hidden;
+    }
+</style>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    function Flake() {
+        //创建雪花
+        var f = document.createElement('img');
+        //获取文档宽高
+        var w = document.documentElement.clientWidth;
+        var h = document.documentElement.clientHeight;
+        //通过宽高生成一个top和left
+        var top = h * Math.random();
+        var left = w * Math.random();
+        //设置图片
+        f.src = 'notes/xuehua.png';
+        f.style.position = 'absolute';
+        //设置雪花位置
+        f.style.top = top + 'px';
+        f.style.left = left + 'px';
+        //缩放大于0扩大 小于0缩小
+        f.style.transform = 'scale(' + Math.random() / 2 + ')';
+        document.body.appendChild(f);
+        function down() {
+            top += Math.random() * 10;
+            left += Math.random() *5;
+            if(top > h){
+                top = -100;
+            }
+            if (left > w) {
+                left = -100;
+            }
+            f.style.top = top + 'px';
+            f.style.left = left + 'px';
+
+        }
+        setInterval(down, 80);
+    }
+
+    for (var i = 0; i < 200; i++) {
+        new Flake();
+    }
+</script>
+
+</html>
