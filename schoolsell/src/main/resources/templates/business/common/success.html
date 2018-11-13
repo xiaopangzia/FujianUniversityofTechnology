@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>成功</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+</head>
+<body>
+<div class="container" style="margin: 100px auto">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-dismissable alert-success">
+                <h3>成功</h3>
+                <span th:text="${msg}+'，3s后自动跳转。'"></span>
+                <a th:href="${url}" class="alert-link">
+                    点击立即跳转
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    setTimeout(function () {
+        window.location = [[${url}]];
+    },3000)
+</script>
+</html>

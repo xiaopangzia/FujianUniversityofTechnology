@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+            <form role="form" method="post" action="/sell/admin/region/save">
+                <div class="form-group" id="divRegionId">
+                    <label for="regionId">
+                        区域ID
+                    </label>
+                    <input placeholder="自动生成" th:value="${regionCategory?.getRegionId()}" type="text" name="regionId" readonly class="form-control" id="regionId"/>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="regionName">
+                        区域名
+                    </label>
+                    <input type="text" th:value="${regionCategory?.getRegionName()}" class="form-control" name="regionName" id="regionName"/>
+                </div>
+
+                <div class="form-group">
+
+                    <label for="regionType">
+                        区域编号
+                    </label>
+                    <input th:value="${regionCategory?.getRegionType()}" type="number" class="form-control" name="regionType" id="regionType"/>
+                </div>
+
+                <input type="hidden" th:value="${token}" name="token">
+
+                <button type="submit" class="btn btn-block btn-lg btn-primary">
+                    提交
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-2"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+            <div id="shopMsg">
+                <div class="text-center">
+                    <p>商铺LOGO</p>
+                    <img th:src="${shop.getShopLogo()}" id="showLogo" class="img-thumbnail" title="点击修改图片">
+                </div>
+                <div>
+                    <dl>
+                        <dt>商铺名:</dt>
+                        <dd th:text="${shop.getShopName()}"></dd>
+
+                        <dt>商铺地址:</dt>
+                        <dd th:text="${shop.getShopAddr()}"></dd>
+
+                        <dt>商铺手机:</dt>
+                        <dd th:text="${shop.getShopPhone()}"></dd>
+
+                        <dt>商铺描述:</dt>
+                        <dd th:text="${shop?.getShopDescribe()}"></dd>
+
+                        <dt>商铺营业时间:</dt>
+                        <dd th:text="${shop?.getShopHour()}"></dd>
+                    </dl>
+                </div>
+
+                <button id="updateStatus" type="button" class="btn btn-primary btn-block">修改商铺信息</button>
+            </div>
+
+            <!--修改图片-->
+            <div id="editImg" style="display: none">
+                <form role="form" method="post" enctype="multipart/form-data"
+                      th:action="'/sell/business/shop/img/'+${shop.getShopId()}">
+
+                    <div class="form-group">
+                        <label for="shopLogo">
+                            请上传想要修改的商铺图片
+                        </label>
+                        <input accept="image/*" type="file" class="form-control-file" name="shopLogo" id="shopLogo"/>
+                    </div>
+
+                    <button type="submit" style="width: 49%" class="btn btn-primary">
+                        修改商铺图片
+                    </button>
+
+                    <button type="button" style="width: 49%" id="exitImg" class="btn btn-secondary">
+                        退出修改
+                    </button>
+                </form>
+            </div>
+
+            <!--修改商铺信息-->
+            <div id="editShop" style="display: none">
+                <form role="form" method="post" th:action="'/sell/business/shop/msg/'+${shop.getShopId()}">
+
+                    <div class="form-group">
+                        <label for="shopName">
+                            商铺名
+                        </label>
+                        <input type="text" required th:value="${shop.getShopName()}" class="form-control" id="shopName" name="shopName"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regionId">
+                            所属分类
+                        </label>
+                        <select id="regionId" name="regionId" class="form-control">
+                            <option th:if="${list.getRegionId()}==${shop.getRegionId()}" selected th:each="list:${regionList}"
+                                    th:value="${list.getRegionId()}" th:text="${list.getRegionName()}"></option>
+                            <option th:if="${list.getRegionId()}!=${shop.getRegionId()}" th:each="list:${regionList}"
+                                    th:value="${list.getRegionId()}" th:text="${list.getRegionName()}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shopAddr">
+                            商铺地址
+                        </label>
+                        <input type="text" required th:value="${shop.getShopAddr()}" class="form-control" id="shopAddr" name="shopAddr"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shopPhone">
+                            商铺手机
+                        </label>
+                        <input type="number" class="form-control" required th:value="${shop.getShopPhone()}" id="shopPhone" name="shopPhone"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTime">
+                            营业时间
+                        </label>
+                        <input type="time" th:value="${startTime}" required class="form-control" id="startTime" name="startTime"/>
+                        到
+                        <input type="time" th:value="${endTime}" required class="form-control" id="endTime" name="endTime"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shopDescribe">
+                            商铺描述
+                        </label>
+                        <textarea class="form-control" th:text="${shop?.getShopDescribe()}" id="shopDescribe" name="shopDescribe"></textarea>
+                    </div>
+
+                    <button type="submit" style="width: 49%" class="btn btn-primary float-left">
+                        修改商铺信息
+                    </button>
+
+                    <button type="button" style="width: 49%" id="exitEdit" class="btn btn-secondary float-right">
+                        退出修改
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+</body>
+
+<script>
+    $("#updateStatus").click(function () {
+        $("#shopMsg").hide();
+        $("#editShop").show();
+    })
+
+    $("#showLogo").click(function () {
+        $("#shopMsg").hide();
+        $("#editImg").show();
+    })
+
+    $("#exitImg").click(function () {
+        $("#shopMsg").show();
+        $("#editImg").hide();
+    })
+
+    $("#exitEdit").click(function () {
+        $("#shopMsg").show();
+        $("#editShop").hide();
+    })
+</script>
+</html>

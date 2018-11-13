@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>商家ID</th>
+                    <th>商家名</th>
+                    <th>商家手机号</th>
+                    <th>商铺名</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="seller:${sellers}">
+                    <td th:text="${seller.getBusinessId()}"></td>
+                    <td th:text="${seller.getBusinessName()}"></td>
+                    <td th:text="${seller.getBusinessPhone()}"></td>
+                    <td>
+                        <span th:if="${seller.getShopId()==null} or ${seller.getShopId()==''}" th:text="该商家未注册商铺"></span>
+                        <span th:if="${seller.getShopId()!=null} and ${seller.getShopId()!=''}" th:text="${seller.getShopName()}"></span>
+                    </td>
+                    <td>
+                        <a th:if="${seller.getShopId()==null} or ${seller.getShopId()==''}"
+                           th:href="'/sell/admin/business/saveShop?token='+${token}+'&businessId='+${seller.getBusinessId()}">
+                            添加店铺
+                        </a>
+                        <a th:if="${seller.getShopId()!=null} and ${seller.getShopId()!=''}"
+                           th:href="'/sell/admin/business/details/'+${seller.getShopId()}+'?token='+${token}">查看店铺</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

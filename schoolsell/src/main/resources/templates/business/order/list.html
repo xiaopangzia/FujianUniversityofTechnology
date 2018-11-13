@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+        <!--<form class="col-md-12" style="margin-top: 10px">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <select class="custom-select d-block w-100" id="country" required="">
+                        <option value="">Choose...</option>
+                        <option>United States</option>
+                    </select>
+                    <div class="invalid-feedback">
+
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" required>
+                    <div class="invalid-feedback">
+
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <button type="button" class="btn btn-primary btn-block">搜索</button>
+                </div>
+            </div>
+        </form>-->
+
+        <div class="col-md-12" id="orderBody" style="margin-top: 30px">
+            <div class="row">
+                <div class="col-4"><strong>订单号</strong></div>
+                <div class="col-1"><strong>用户名</strong></div>
+                <div class="col-1"><strong>电话</strong></div>
+                <div class="col-1"><strong>总价</strong></div>
+                <div class="col-1"><strong>地址</strong></div>
+                <div class="col-1"><strong>状态</strong></div>
+                <div class="col-3"><strong>操作</strong></div>
+            </div>
+
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-12">
+
+                    <div th:each="voList:${businessVO}" class="row" style="padding-top: 20px;">
+                        <div class="col-4" th:text="${voList.getOrderId()}"></div>
+                        <div class="col-1" th:text="${voList.getUsername()}"></div>
+                        <div class="col-1" th:text="${voList.getPhone()}"></div>
+                        <div class="col-1" th:text="${voList.getOrderAmount()}"></div>
+                        <div class="col-1" th:text="${voList.getAddress()}"></div>
+                        <div class="col-1">
+                            <span th:if="${voList.getOrderStatus()}==0">未支付</span>
+                            <span th:if="${voList.getOrderStatus()}==1">已支付</span>
+                            <span th:if="${voList.getOrderStatus()}==2">已取消</span>
+                        </div>
+                        <div class="col-3">
+                            <a href="#" data-toggle="collapse" th:data-target="'#'+${voList.getOrderId()}">
+                                展开
+                            </a>
+                            <a th:if="${voList.getOrderStatus()}==0 or ${voList.getOrderStatus()}==1"
+                               href="#" th:onclick="|cancelOrder('${voList.getOrderId()}')|">
+                                取消
+                            </a>
+                        </div>
+                        <div th:id="${voList.getOrderId()}" class="collapse col-md-12">
+                            <div class="border rounded">
+                                <table class="table">
+                                    <tbody>
+                                        <tr th:each="detail:${voList.getOrderDetailVOS()}">
+                                            <td th:text="${detail.getProductName()}"></td>
+                                            <td th:text="${detail.getProductQuantity()}+'份'"></td>
+                                            <td th:text="${detail.getProductPrice()}+'元'"></td>
+                                        </tr>
+                                        <tr>
+                                            <td th:text="'时间：'+${voList.getCreateTime()}"></td>
+                                            <td th:text="'备注：'+${voList.getOrderMessage()}"></td>
+                                            <td th:text="'总价：'+${voList.getOrderAmount()}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div th:replace="business/common/paging::paging('/sell/business/order/list')"></div>
+            <script th:replace="business/common/paging::pageScript"></script>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/toastr.min.js}"></script>
+<script th:src="@{/js/toastTemplet.js}"></script>
+<script>
+    function cancelOrder(orderId) {
+        if (confirm('确定要取消订单吗？')) {
+            $.ajax({
+                url: '/sell/business/order/cancel/' + orderId,
+                type: 'get',
+                dataType: 'json',
+                cache: false,
+                success:function (data) {
+                    toastTemplet("success", data.data + ',请手动刷新');
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>
+

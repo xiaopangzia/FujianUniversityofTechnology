@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="hhtp://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link th:href="@{/image/favicon.ico}" rel="shortcut icon" type="image/x-icon">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/toastr.min.css}" rel="stylesheet" type="text/css">
+    <title>校园外卖</title>
+</head>
+<style>
+    body {
+        background-color: #f7f7f7;
+    }
+
+    #shopBody {
+        background-color: white;
+        border: 1px solid #E8F2F7;
+    }
+
+    #shop {
+        border-bottom: 1px solid #E8F2F7;
+    }
+
+    #shop:hover {
+        background-color: #f7f7f7;
+    }
+</style>
+<body>
+<div class="container-fluid">
+    <!--header-->
+    <div class="row">
+        <div class="col-md-12">
+            <nav th:if="${id}==null" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <!--未登录-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <form class="form-inline ml-md-auto">
+                        <input class="form-control mr-sm-2" type="text" id="shopName" placeholder="请输入商铺"/>
+                        <button class="btn btn-secondary my-2 my-sm-0" id="searchShop" type="button">
+                            搜索
+                        </button>
+                    </form>
+
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/sell/user/login">登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <nav th:if="${id}!=null" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <!--已登录-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sell/user/order/index">我的订单</a>
+                        </li>
+                    </ul>
+
+                    <form class="form-inline ml-md-auto">
+                        <input class="form-control mr-sm-2" type="text" id="shopName" placeholder="搜索商铺"/>
+                        <button class="btn btn-secondary my-2 my-sm-0" type="button" id="searchShop">
+                            搜索
+                        </button>
+                    </form>
+
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                <img th:src="${img}" id="userImg"
+                                     style="width: 30px;height: 30px;line-height: 30px;border-radius: 50%"/>
+                                <span th:text="${name}"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/sell/user/msg/'+${id}">个人中心</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)" th:onclick="|userLogout('${id}')|">退出登录</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+
+
+    </div>
+
+    <!--Carousel-->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="padding: 100px 0 0 0">
+            <div class="carousel slide" id="carousel-454680">
+                <ol class="carousel-indicators">
+                    <li data-slide-to="0" data-target="#carousel-454680" class="active">
+                    </li>
+                    <li data-slide-to="1" data-target="#carousel-454680">
+                    </li>
+                    <li data-slide-to="2" data-target="#carousel-454680">
+                    </li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" alt="Carousel Bootstrap First"
+                             src="https://www.layoutit.com/img/sports-q-c-1600-500-1.jpg"/>
+                        <div class="carousel-caption">
+                            <h4>
+                                First Thumbnail label
+                            </h4>
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" alt="Carousel Bootstrap Second"
+                             src="https://www.layoutit.com/img/sports-q-c-1600-500-2.jpg"/>
+                        <div class="carousel-caption">
+                            <h4>
+                                Second Thumbnail label
+                            </h4>
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" alt="Carousel Bootstrap Third"
+                             src="https://www.layoutit.com/img/sports-q-c-1600-500-3.jpg"/>
+                        <div class="carousel-caption">
+                            <h4>
+                                Third Thumbnail label
+                            </h4>
+                            <p>
+                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev" href="#carousel-454680" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span> <span class="sr-only">Previous</span></a>
+                <a class="carousel-control-next" href="#carousel-454680" data-slide="next">
+                    <span class="carousel-control-next-icon"></span> <span class="sr-only">Next</span></a>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <!--body-->
+    <div class="row" style="padding-top: 50px">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" id="shopBody">
+            <div class="row">
+                <div class="col-12">
+                    <form role="form" class="form-inline" style="margin: 15px 0">
+                        <div class="form-group">
+                            <select class="form-control" title="请选择区域"
+                                    id="regionId" name="regionId">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" id="allShop">
+                <!--<div class="col-sm-6 col-md-4 col-lg-3" id="shop">
+                    <div class="media" style="padding: 10px">
+                        <img class="mr-3 img-thumbnail"
+                             src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg"/>
+                        <div class="media-body" title="好吃的去问问">
+                            <h5 class="mt-0">沙县小吃</h5>
+                            <p style="color: #6c757d;"></p>
+                            <p style="background-color: black"></p>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <!--footer-->
+    <footer class="footer" style="border-top: 1px solid #E8F2F7;margin-top: 50px">
+        <div class="row text-center">
+            <div class="col-md-12" style="margin: 20px 0">
+                <a style="margin: 10px" href="mailto:hcb739237663@gmail.com">
+                    <img th:src="@{/image/gmail.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://github.com/ChengBinH">
+                    <img th:src="@{/image/github.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://weibo.com/234495038">
+                    <img th:src="@{/image/weibo.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="https://www.baidu.com">
+                    <img th:src="@{/image/alipay.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="#">
+                    <img th:src="@{/image/wechat.png}"/>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center text-primary">
+                Copyright ©2018-2019 , All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+</div>
+<script th:src="@{/js/jQuery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
+<script th:src="@{/js/toastTemplet.js}"></script>
+<script th:src="@{/js/userInfo.js}"></script>
+<script th:src="@{/js/userCommon.js}"></script>
+<script>
+    getAllRegion();
+    getAllShop();
+    $("#regionId").change(function () {
+        var regionId = this.value;
+        if (regionId == 0) {
+            getAllShop();
+        }else {
+            getShopByRegion(regionId);
+        }
+    })
+    $("#searchShop").click(function () {
+        var shopName = $("#shopName").val();
+        searchShop(shopName);
+    })
+</script>
+<script th:inline="javascript">
+    var address = [[${address}]];
+    if (address != null) {
+        alert(address);
+    }
+</script>
+</body>
+</html>

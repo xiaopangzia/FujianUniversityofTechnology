@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link th:href="@{/image/favicon.ico}" rel="shortcut icon" type="image/x-icon">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/toastr.min.css}" rel="stylesheet" type="text/css">
+    <title>校园外卖</title>
+</head>
+<style>
+    #category a{
+        text-decoration: none;
+    }
+    .category:hover {
+        background-color: #f7f7f7;
+    }
+    #productAll .col-6:hover{
+        background-color: #f7f7f7;
+    }
+    .number{
+        background-color: #1296db;
+        color: white;
+        line-height: 20px;
+        height: 20px;
+        width: 20px;
+        border-radius: 3px;
+        text-align: center;
+        display: inline-block;
+    }
+</style>
+<body style="background-color: #f7f7f7">
+<div class="container-fluid">
+    <div class="row" id="top">
+        <div class="col-md-12">
+            <nav th:if="${id}==null" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <!--未登录-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <form class="form-inline ml-md-auto">
+                        <input class="form-control mr-sm-2" type="text" id="shopName" placeholder="请输入商铺"/>
+                        <button class="btn btn-secondary my-2 my-sm-0" id="searchShop" type="button">
+                            搜索
+                        </button>
+                    </form>
+
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="'/sell/user/login?url=/sell/user/shop/'+${shopId}">登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <nav th:if="${id}!=null" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <!--已登录-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sell/user/order/index">我的订单</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                <img th:src="${img}" id="userImg"
+                                     style="width: 30px;height: 30px;line-height: 30px;border-radius: 50%"/>
+                                <span th:text="${name}"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/sell/user/msg/'+${id}">个人中心</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)" th:onclick="|userLogout('${id}')|">退出登录</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div th:if="${shop}==null" class="col-md-12" style="padding-top: 100px">
+            <!--未营业-->
+            <h1 class="text-center">该商铺不存在，请选择其他商铺</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div th:if="${shop}!=null and ${shop?.getShopStatus()}==0" class="col-md-12" style="padding-top: 100px">
+            <!--未营业-->
+            <h1 class="text-center">该商铺未营业，请选择其他商铺</h1>
+        </div>
+    </div>
+
+    <div th:if="${shop}!=null and ${shop?.getShopStatus()}==1" class="row" style="padding-top: 100px;">
+        <!--营业中-->
+        <div class="col-1 col-md-2"></div>
+        <div class="col-10 col-md-8">
+            <div class="row border" style="background-color: white;">
+                <div class="col-md-12">
+                    <a id="modal-878420" href="#modal-container-878420" role="button" data-toggle="modal">
+                        <h1 class="text-center" th:text="${shop?.getShopName()}"
+                            style="color: black;height: 100px;line-height: 100px;"></h1>
+                    </a>
+
+                    <div class="modal fade" id="modal-container-878420" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">
+                                        商家信息
+                                    </h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="card-text" th:if="${shop?.getShopDescribe()}!=null" th:text="'商铺描述： '+${shop.getShopDescribe()}"></p>
+                                    <p class="card-text" th:if="${shop?.getShopHour()}!=null" th:text="'营业时间： '+${shop.getShopHour()}"></p>
+                                    <p class="card-text" th:if="${shop?.getShopAddr()}!=null" th:text="'商铺地址： '+${shop.getShopAddr()}"></p>
+                                    <p class="card-text" th:text="'商铺电话： '+${shop?.getShopPhone()}"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        关闭
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row" style="padding-top: 30px">
+                <div class="col-md-12 border" style="background-color: white">
+                    <div class="card-body">
+                        <div class="row text-center" id="category">
+                            <!--该商铺的所有商品分类-->
+                            <!--<div class="col-xl-2 col-4 category">
+                                <a href="#1" class="text-info">123</a>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="productAll" style="padding-top: 30px">
+
+                <!--<div class="col-md-12 border" style="background-color: white;margin-bottom: 30px">
+                    <div class="card-body">
+                        &lt;!&ndash;商品分类&ndash;&gt;
+                        <h5 id="1"># 炒饭</h5>
+                        <div class="row" id="categoryId">
+                            <div class="col-md-3 col-6 border">
+                                <img src="https://sell.nos-eastchina1.126.net/wertweqtertrwetgwedrwer.jpg"
+                                     class="w-100" style="padding-top: 20px"/>
+                                <div style="margin: 10px 0">
+                                    <b>鸡蛋该交房十多个</b>
+                                    <p>
+                                        <b class="float-left" style="color: red">￥35.8</b>
+                                        <a class="float-right" href="#">
+                                            添加
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+            </div>
+
+        </div>
+        <div class="col-1 col-md-2"></div>
+    </div>
+
+    <footer class="footer" style="border-top: 1px solid #E8F2F7;margin-top: 50px">
+        <div class="row text-center">
+            <div class="col-md-12" style="margin: 20px 0">
+                <a style="margin: 10px" href="mailto:hcb739237663@gmail.com">
+                    <img th:src="@{/image/gmail.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://github.com/ChengBinH">
+                    <img th:src="@{/image/github.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://weibo.com/234495038">
+                    <img th:src="@{/image/weibo.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="https://www.baidu.com">
+                    <img th:src="@{/image/alipay.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="https://www.baidu.com">
+                    <img th:src="@{/image/wechat.png}"/>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center text-primary">
+                Copyright ©2018-2019 , All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+    <a id="modal-996847" href="#modal-container-996847"
+       data-toggle="modal" class="position-fixed" style="right: 35px;bottom: 90px">
+        <img id="cart" th:src="@{/image/cart.png}">
+    </a>
+
+    <a href="#top" class="position-fixed" style="right: 30px;bottom: 30px">
+        <img th:src="@{/image/top.png}">
+    </a>
+
+    <!--购物车-->
+    <div class="modal fade" id="modal-container-996847"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">
+                        购物车
+                    </h5>
+                    <h5>
+                        总价：<span id="amount"></span> 元
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <table class="table text-center">
+                        <tr>
+                            <th>商品名</th>
+                            <th>数量</th>
+                            <th>价格</th>
+                        </tr>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button th:onclick="|shopping('${id}','${shop.getShopId()}')|"
+                            type="button" id="shopping" class="btn btn-primary" style="display: none">
+                        去下单
+                    </button>
+                    <a class="btn" onclick="removeCart()" id="reset" style="display: none">清空</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script th:src="@{/js/jQuery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
+<script th:src="@{/js/toastTemplet.js}"></script>
+<script th:src="@{/js/userCommon.js}"></script>
+<script th:src="@{/js/userInfo.js}"></script>
+<script th:src="@{/js/showShop.js}"></script>
+<script th:inline="javascript">
+    var shopId = [[${shop?.getShopId()}]];
+    if (shopId != null || shopId != "") {
+        showCategory(shopId);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p>原图</p>
+            <img width="100%" class="img-thumbnail" height="100%" th:src="${url}">
+
+            <form role="form" action="/sell/business/product/img" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+
+                    <label for="productImg">
+                        上传图片
+                    </label>
+                    <input type="file" class="form-control-file" accept="image/*" name="productImg" id="productImg"/>
+                </div>
+
+                <input hidden th:value="${productId}" name="productId">
+
+                <button type="submit" class="btn btn-primary">
+                    修改图片
+                </button>
+
+                <a class="btn" href="javascript:history.back()">返回上一页</a>
+            </form>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

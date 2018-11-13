@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+    <div class="row">
+        <div class="col-md-12"></div>
+            <h2 style="margin: 10px auto;text-align: center"
+                th:text="${shopName}+'店铺销售情况'"></h2>
+        <div class="col-md-12" style="margin: 20px 0">
+            <div style="text-align: center;margin: 0 auto">
+                <button id="showOrder" class="btn">订单日视图</button>
+                <button id="showSale" title="只能查询当前时间的前一天的订单" class="btn">营业额日视图</button>
+                <select title="只能查询当前时间的前一天的订单" id="showProduct" class="custom-select d-inline-block w-25">
+                    <option value="0">点击查看商品日销量</option>
+                    <option th:each="voList:${productVOS}"
+                            th:value="${voList.getProductId()}" th:text="${voList.getProductName()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div id="main" class="w-75" style="height: 600px;margin: 0 auto"></div>
+        </div>
+        <div class="col-md-12"></div>
+    </div>
+
+</div>
+<script th:src="@{/js/echarts.js}"></script>
+<script th:inline="javascript">
+
+    showOrder();
+    $("#showOrder").click(function () {
+        showOrder();
+    });
+    $("#showSale").click(function () {
+        showSale();
+    })
+
+    function showOrder() {
+        var dates = [[${dates}]];
+        var nums = [[${nums}]];
+        if (dates == nums) {
+            alert('未查到订单')
+        }else {
+            showEcharts(dates,nums,'商铺日订单数','营业额/单')
+        }
+    }
+
+    function showSale(shopId) {
+        var dates = [[${saleDates}]];
+        var sales = [[${sales}]];
+        if (dates == null) {
+            alert('未查到订单');
+        }else {
+            showEcharts(dates,sales,'商铺日营业额','营业额/元')
+        }
+    }
+
+    $("#showProduct").change(function () {
+        var token = [[${token}]];
+        if ($(this).val() != 0) {
+            $.ajax({
+                url: '/sell/admin/business/show/product/'+$(this).val()+'?token='+token,
+                dataType: 'json',
+                type: 'get',
+                success:function (data) {
+                    var show = data.data;
+                    if (show.date == null) {
+                        alert('查不到该商品的订单');
+                    }else {
+                        showEcharts(show.date, show.sale, show.name + '日营业额', show.name + '/元');
+
+                    }
+                }
+            });
+        }
+    });
+
+    /**
+     * ECharts图标展示
+     * @param xData x轴显示信息日期
+     * @param yData 显示信息的数量
+     * @param tilteText 图标总标题
+     * @param nameText 显示信息的名字
+     */
+    function showEcharts(xData,yData,tilteText,nameText) {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        option = {
+            color: ['#3398DB'],
+            title: {
+                text: tilteText
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                right: 'center',
+                width: '80%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: xData,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: nameText,
+                    type: 'bar',
+                    barWidth: '70%',
+                    data: yData
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+
+            <form th:if="${num==1}" role="form" method="post" action="/sell/business/updateInfo/updateName">
+                <div class="form-group">
+                    <label>
+                        原有商家名
+                    </label>
+                    <input readonly type="text" th:value="${business.getBusinessName()}" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessName">
+                        新的商家名
+                    </label>
+                    <input required type="text" class="form-control" id="businessName" name="businessName"/>
+                </div>
+
+                <button onclick="return updateBusinessName()" type="submit"
+                        class="btn btn-block btn-lg btn-primary">
+                    修改商户名
+                </button>
+            </form>
+
+
+
+            <form th:if="${num==2}" role="form" method="post" action="/sell/business/updateInfo/updatePhone">
+
+                <div class="form-group">
+                    <label for="oldBusinessPhone">
+                        原来的商家手机
+                    </label>
+                    <input required type="number" class="form-control" id="oldBusinessPhone" name="oldBusinessPhone"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessPhone">
+                        新的商家手机
+                    </label>
+                    <input required type="number" class="form-control" id="businessPhone" name="businessPhone"/>
+                </div>
+
+                <button onclick="return updateBusinessPhone()" type="submit"
+                        class="btn btn-block btn-lg btn-primary">
+                    修改手机号
+                </button>
+            </form>
+
+
+
+            <form id="pwd" th:if="${num==3}" role="form" method="post" action="/sell/business/updateInfo/updatePwd">
+                <div class="form-group">
+                    <label for="businessPwd">
+                        原来的商家密码
+                    </label>
+                    <input required type="password" class="form-control" id="businessPwd" name="businessPwd"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="newBusinessPwd">
+                        新的商家密码
+                    </label>
+                    <input required type="password" class="form-control" id="newBusinessPwd" name="newBusinessPwd"/>
+                </div>
+                <div class="form-group">
+                    <label for="verifyNewBusinessPwd">
+                        新的商家密码
+                    </label>
+                    <input required type="password" class="form-control" id="verifyNewBusinessPwd"
+                           name="verifyNewBusinessPwd"/>
+                </div>
+                <button type="submit"
+                        class="btn btn-block btn-lg btn-primary">
+                    修改密码
+                </button>
+            </form>
+
+        </div>
+
+        <div class="col-md-4"></div>
+
+    </div>
+</div>
+<script>
+
+    $("#pwd input").blur(function() {
+        if ($(this).val().length < 8) {
+            toastTemplet("warning","密码长度至少8位");
+        }
+    })
+
+    function updatePwd() {
+        var pwd = $("#businessPwd").val();
+        var newPwd = $("#newBusinessPwd").val();
+        var verifyNewPwd = $("#verifyNewBusinessPwd").val();
+        if (pwd.length < 8 || newPwd.length < 8 || verifyNewPwd.length < 8) {
+            toastTemplet("warning","密码长度至少8位");
+            return false;
+        }
+        if (newPwd != verifyNewPwd) {
+            toastTemplet("warning","两次密码不一致");
+            return false;
+        }
+    }
+
+    function updateBusinessName() {
+        var name = $("#businessName").val();
+        if (name == "") {
+            toastTemplet("warning","商户名不能为空");
+            return false;
+        }
+    }
+
+    function updateBusinessPhone() {
+        var phone = $("#businessPhone").val();
+        var oldPhone = $("#oldBusinessPhone").val();
+        if (phone.length < 8 || oldPhone.length < 8) {
+            toastTemplet("warning","商户手机不能少于8位");
+            return false;
+        }
+    }
+
+</script>
+</body>
+</html>

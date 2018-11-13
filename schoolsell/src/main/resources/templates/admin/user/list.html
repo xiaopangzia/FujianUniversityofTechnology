@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>用户ID</th>
+                    <th>用户头像</th>
+                    <th>用户名</th>
+                    <th>用户电话</th>
+                    <th>用户地址</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list:${userList}">
+                    <td th:text="${list.getUserId()}"></td>
+                    <td><img width="30px" height="30px" th:src="${list.getUserImg()}"></td>
+                    <td th:text="${list.getUsername()}"></td>
+                    <td th:text="${list.getPhone()}"></td>
+                    <td th:text="${list.getAddress()}"></td>
+                    <td><a th:href="'/sell/admin/user/detail/'+${list.getUserId()}+'?token='+${token}">查看详细</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <nav th:replace="admin/common/paging::paging"></nav>
+        </div>
+
+    </div>
+
+</div>
+<script th:replace="admin/common/paging::pageScript"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+
+                <div class="col-md-4">
+                    <form role="form" method="post" action="/sell/admin/business/saveShop">
+
+                        <div class="form-group">
+                            <label for="shopName">
+                                商铺名
+                            </label>
+                            <input type="text" class="form-control" id="shopName" name="shopName" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="businessId">
+                                所属商家
+                            </label>
+                            <select class="form-control" id="businessId" name="businessId">
+                                <option th:each="seller:${sellers}" th:value="${seller.getBusinessId()}"
+                                        th:text="${seller.getBusinessName()}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="regionId">
+                                所属区域
+                            </label>
+                            <select class="form-control" id="regionId" name="regionId">
+                                <option th:each="region:${regions}" th:value="${region.getRegionId()}"
+                                        th:text="${region.getRegionName()}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shopPhone">
+                                商铺电话
+                            </label>
+                            <input type="number" class="form-control" id="shopPhone" name="shopPhone" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shopAddr">
+                                商铺地址
+                            </label>
+                            <input type="text" class="form-control" id="shopAddr" name="shopAddr" />
+                        </div>
+
+                        <input type="hidden" name="token" th:value="${token}" />
+
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">
+                            添加
+                        </button>
+                    </form>
+                </div>
+
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script th:inline="javascript">
+    var business = [[${sellers}]];
+    if (business.length == null) {
+        $("#shopPhone").val(business.businessPhone)
+    }else{
+        changePhone();
+    }
+    $("#businessId").change(function () {
+        changePhone();
+    })
+
+    function changePhone() {
+        for (var i = 0; i < business.length; i++) {
+            if (business[i].businessId == $("#businessId").val()) {
+                $("#shopPhone").val(business[i].businessPhone)
+            }
+        }
+    }
+</script>
+</body>
+</html>

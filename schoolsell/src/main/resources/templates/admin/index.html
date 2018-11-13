@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-12">
+            <div style="margin: 20px 0">
+                <table class="table border rounded-circle" style="width: 75%;margin: 0 auto">
+                    <tbody>
+                        <tr class="table-active">
+                            <td>校园点餐商铺总数</td>
+                            <td th:text="${shop}+'家'"></td>
+                            <td>校园点餐用户总数</td>
+                            <td th:text="${user}+'位'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="main" class="w-75" style="height: 800px;margin: 0 auto"></div>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/echarts.js}"></script>
+<script th:inline="javascript">
+    var dates = [[${dates}]];
+    var amounts = [[${amounts}]];
+    var nums = [[${nums}]];
+    var myECharts = echarts.init(document.getElementById('main'));
+
+    option = {
+        title: {
+            text: '校园点餐最近七天运营情况'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['日订单数/单','日营业额/元']
+        },
+        grid: {
+            right: 'center',
+            width: '90%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: dates
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'日订单数/单',
+                type:'line',
+                stack: '总量',
+                data:nums
+            },
+            {
+                name:'日营业额/元',
+                type:'line',
+                stack: '总量',
+                data:amounts
+            }
+        ]
+    };
+
+    myECharts.setOption(option);
+</script>
+</body>
+</html>

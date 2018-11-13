@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+
+                <div class="col-md-4">
+                    <form role="form" method="post" action="/sell/admin/business/saveSeller">
+
+                        <div class="form-group">
+                            <label for="businessName">
+                                商家名
+                            </label>
+                            <input type="text" class="form-control" id="businessName" name="businessName" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="businessPhone">
+                                商家手机
+                            </label>
+                            <input type="number" class="form-control" id="businessPhone" name="businessPhone" />
+                        </div>
+
+                        <input type="hidden" name="token" th:value="${token}" />
+
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">
+                            添加
+                        </button>
+                    </form>
+                </div>
+
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

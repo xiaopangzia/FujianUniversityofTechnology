@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>区域ID</th>
+                    <th>区域名</th>
+                    <th>区域编号</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list:${list}">
+                    <td th:text="${list.regionId}"></td>
+                    <td th:text="${list.regionName}"></td>
+                    <td th:text="${list.regionType}"></td>
+                    <!--<td><a th:href="'/sell/admin/region/save?regionId='+${list.regionId}+'&token='+${token}">修改</a></td>-->
+                    <td><a th:href="'/sell/admin/region/save?regionId='+${list.regionId}+'&token='+${token}">
+                        修改</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

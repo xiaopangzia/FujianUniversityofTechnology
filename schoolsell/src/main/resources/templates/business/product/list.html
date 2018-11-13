@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table style="text-align: center" class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>商品ID</th>
+                    <th>商品图片</th>
+                    <th>商品名</th>
+                    <th>所属分类</th>
+                    <th>商品价格/元</th>
+                    <th>商品库存/件</th>
+                    <th>商品状态</th>
+                    <th colspan="3">修改操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list:${voList}">
+                    <td th:text="${list.getProductId()}"></td>
+                    <td><img th:src="${list.getProductImg()}" width="30px" height="30px"></td>
+                    <td th:text="${list.getProductName()}"></td>
+                    <td th:text="${list.getCategoryName()}"></td>
+                    <td th:text="${list.getProductPrice()}"></td>
+                    <td th:text="${list.getProductStock()}"></td>
+                    <td th:text="${list.getStatusName()}"></td>
+                    <td><a th:href="'/sell/business/product/save?productId='+${list.getProductId()}">信息</a></td>
+                    <td><a th:href="'/sell/business/product/img/'+${list.getProductId()}+'?url='+${list.getProductImg()}">图片</a></td>
+                    <td>
+                        <a id="status" th:if="${list.getProductStatus()}==0"
+                           href="javascript:void(0)" th:onclick="|updateStatus('${list.getProductId()}')|">上架</a>
+
+                        <a id="status" th:if="${list.getProductStatus()}==1"
+                           href="javascript:void(0)" th:onclick="|updateStatus('${list.getProductId()}')|">下架</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div th:replace="business/common/paging::paging('/sell/business/product/list')"></div>
+        </div>
+    </div>
+
+
+</div>
+<script th:replace="business/common/paging::pageScript"></script>
+<script>
+    function updateStatus(productId) {
+        $.ajax({
+            url: "/sell/business/product/status/" + productId,
+            type: 'get',
+            success: function () {
+                toastTemplet('success', '修改商品状态成功,请手动刷新');
+            }
+        })
+    }
+</script>
+</body>
+</html>
+

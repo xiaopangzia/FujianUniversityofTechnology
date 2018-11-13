@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link th:href="@{/image/favicon.ico}" rel="shortcut icon" type="image/x-icon">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/toastr.min.css}" rel="stylesheet" type="text/css">
+    <title>校园外卖</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav th:if="${id}!=null" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <!--已登录-->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sell/user/order/index">我的订单</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-md-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                <img th:src="${img}" id="userImg"
+                                     style="width: 30px;height: 30px;line-height: 30px;border-radius: 50%"/>
+                                <span th:text="${name}"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/sell/user/msg/'+${id}">个人中心</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)" th:onclick="|userLogout('${id}')|">退出登录</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10" style="padding-top: 100px;">
+            <div class="row" id="detailBody">
+
+                <!--<div class="col-12" style="margin-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>状态：已取消</span>
+                            <div class="float-right">商家电话：</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="padding-bottom: 30px">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="media">
+                                <img class="mr-3" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg"/>
+                                <div class="media-body">
+                                    <h5 class="mt-0">
+                                        炒米粉
+                                    </h5>订单号：123
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table id="tableShow" class="card-text table">
+                                <thead>
+                                <tr>
+                                    <th>商品名</th>
+                                    <th>数量</th>
+                                    <th>单价</th>
+                                    <th>小计</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>123</td>
+                                    <td>132</td>
+                                    <td>132</td>
+                                    <td>123</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <span class="float-right">价格：123</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-text">配送信息</h5>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" id="editUser" style="display: none">
+                                <div class="form-group">
+                                    <label for="username">
+                                        姓名
+                                    </label>
+                                    <input type="text" class="form-control" id="username" name="username" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">
+                                        电话
+                                    </label>
+                                    <input type="text" class="form-control" id="phone" name="phone" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">
+                                        地址
+                                    </label>
+                                    <input type="text" class="form-control" id="address" name="address" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="orderMessage">
+                                        备注
+                                    </label>
+                                    <input type="text" class="form-control" id="orderMessage" name="orderMessage" />
+                                </div>
+
+                                <button id="saveForm" type="button" class="btn btn-primary">
+                                    提交
+                                </button>
+                                <button id="exitEdit" type="button" class="btn">
+                                    返回
+                                </button>
+                            </form>
+
+                            <div id="showUser">
+                                <p>姓名:<span id="showName">123</span></p>
+                                <p>电话:<span id="showPhone">123</span></p>
+                                <p>地址:<span id="showAddress">123</span></p>
+                                <p>备注:<span id="showMessage">123</span></p>
+                                <button id="toEdit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <footer class="footer" style="border-top: 1px solid #E8F2F7;margin-top: 50px">
+        <div class="row text-center">
+            <div class="col-md-12" style="margin: 20px 0">
+                <a style="margin: 10px" href="mailto:hcb739237663@gmail.com">
+                    <img th:src="@{/image/gmail.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://github.com/ChengBinH">
+                    <img th:src="@{/image/github.png}"/>
+                </a>
+
+                <a target="_blank" style="margin: 10px" href="https://weibo.com/234495038">
+                    <img th:src="@{/image/weibo.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="https://www.baidu.com">
+                    <img th:src="@{/image/alipay.png}"/>
+                </a>
+
+                <a style="margin: 10px" href="https://www.baidu.com">
+                    <img th:src="@{/image/wechat.png}"/>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center text-primary">
+                Copyright ©2018-2019 , All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<script th:src="@{/js/jQuery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/toastr.min.js}"></script>
+<script th:src="@{/js/toastTemplet.js}"></script>
+<script th:src="@{/js/userInfo.js}"></script>
+<script th:src="@{/js/userPay.js}"></script>
+<script th:inline="javascript">
+    var orderId = [[${orderId}]];
+    showDetail(orderId);
+</script>
+</body>
+</html>

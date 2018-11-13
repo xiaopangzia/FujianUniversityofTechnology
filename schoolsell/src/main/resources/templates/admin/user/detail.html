@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 30px;text-align: center">
+            <h2 th:text="${username}+'最近七天消费情况'"></h2>
+        </div>
+        <div class="col-md-12" style="margin: 30px 0">
+            <div id="main" class="w-75" style="height: 600px;margin: 0 auto"></div>
+        </div>
+    </div>
+
+</div>
+<script th:src="@{/js/echarts.js}"></script>
+<script th:inline="javascript">
+    var dates = [[${dates}]];
+    var nums = [[${nums}]];
+    var amounts = [[${amounts}]];
+    var myECharts = echarts.init(document.getElementById('main'));
+
+    option = {
+        title: {
+            text: '用户最近七天消费情况'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['每日订单数/单','每日消费/元']
+        },
+        grid: {
+            right: 'center',
+            width: '90%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: dates
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'每日订单数/单',
+                type:'line',
+                stack: '总量',
+                data:nums
+            },
+            {
+                name:'每日消费/元',
+                type:'line',
+                stack: '总量',
+                data:amounts
+            }
+        ]
+    };
+
+    myECharts.setOption(option);
+</script>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+spring:
+  jackson:
+    # json返回空时,不返回
+    default-property-inclusion: non_null
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://155.94.247.112/schoolsell?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  # Redis 配置
+  redis:
+    host: 155.94.247.112
+    password: 123456
+    port: 6379
+  servlet:
+    multipart:
+      max-file-size: 3MB
+  mvc:
+    favicon:
+      enabled: true
+server:
+  port: 8080
+  servlet:
+    context-path: /sell
+logging:
+  config: classpath:sell-logback.xml
+qiniu:
+  accessKey: ZwAqX8X2mgS_FZbdgUgZON9K8fGI2LOadY2OrI6d
+  secretKey: qfOy5e_Fv012NB37Hc0c_wABMq4cPLrVTLPCCLZh
+  uploadUrl: http://paicrtff0.bkt.clouddn.com/
+  bucket: test
+netease:
+  nos:
+    accessKey: 3b57b430aa08ef54d1789a32c973dd6b
+    secretKey: 73569e69465378386151941a2f479fa9
+    uploadUrl: nos-eastchina1.126.net
+    bucket: sell

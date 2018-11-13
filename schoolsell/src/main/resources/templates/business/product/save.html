@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="business/common/head::head"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="business/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+
+            <form role="form" action="/sell/business/product/save" method="post">
+
+                <div class="form-group">
+                    <label for="productId">
+                        商品ID
+                    </label>
+                    <input placeholder="自动生成" type="text" th:value="${product?.getProductId()}"
+                           class="form-control" readonly id="productId" name="productId" />
+                </div>
+
+                <div class="form-group">
+                    <label for="productName">
+                        商品名
+                    </label>
+                    <input type="text" class="form-control" th:value="${product?.getProductName()}"
+                           required id="productName" name="productName" />
+                </div>
+
+                <div th:if="${category!=null}" class="form-group">
+                    <label for="categoryId">
+                        所属分类
+                    </label>
+                    <select name="categoryId" id="categoryId" class="form-control">
+                        <option th:each="list:${categoryList}" th:if="${list.getCategoryId()}==${category}" selected
+                                th:value="${list.getCategoryId()}" th:text="${list.getCategoryName()}"></option>
+
+                        <option th:each="list:${categoryList}" th:if="${list.getCategoryId()}!=${category}"
+                                th:value="${list.getCategoryId()}" th:text="${list.getCategoryName()}"></option>
+                    </select>
+                </div>
+
+                <div th:if="${category==null}" class="form-group">
+                    <label for="categoryId">
+                        所属分类
+                    </label>
+                    <select name="categoryId" id="categoryId" class="form-control">
+                        <option th:each="list:${categoryList}" th:value="${list.getCategoryId()}"
+                                th:text="${list.getCategoryName()}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="productPrice">
+                        商品价格
+                    </label>
+                    <input type="text" class="form-control" th:value="${product?.getProductPrice()}"
+                           required id="productPrice" name="productPrice" placeholder="请务必输入数字" />
+                </div>
+
+                <div class="form-group">
+                    <label for="productStock">
+                        商品库存
+                    </label>
+                    <input type="number" class="form-control" th:value="${product?.getProductStock()}"
+                           id="productStock" name="productStock" />
+                </div>
+
+                <input hidden name="productStatus" th:value="${product?.getProductStatus()}">
+
+                <input hidden name="productImg" th:value="${product?.getProductImg()}">
+
+                <button th:if="${category}==null" type="submit" style="width: 49%" class="btn btn-primary">
+                    添加商品信息
+                </button>
+
+                <button th:if="${category}!=null" type="submit" style="width: 49%" class="btn btn-primary">
+                    修改商品信息
+                </button>
+
+                <button type="button" class="btn btn-secondary float-right" style="width: 49%" onclick="javascript:history.back()">
+                    返回上一页
+                </button>
+            </form>
+
+        </div>
+
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<nav th:fragment="paging(url)" style="float: right">
+    <ul class="pagination">
+        <li class="page-item">
+            <a th:if="${page}!=1" class="page-link"
+               th:href="${url}+'?page='+(${page}-1)">上一页</a>
+            <a th:if="${page}==1" class="page-link">上一页</a>
+        </li>
+
+        <li class="page-item">
+            <form method="get" th:action="${url}">
+                <select name="page" class="custom-select" id="pageSelect"></select>
+            </form>
+        </li>
+
+        <li class="page-item">
+            <a th:if="${page}<${totals}" class="page-link"
+               th:href="${url}+'?page='+(${page}+1)">下一页</a>
+            <a th:if="${page}==${totals}" class="page-link">下一页</a>
+        </li>
+
+        <li class="page-item"><span class="page-link" style="color: #000;" th:text="'共'+${totals}+'页'"></span></li>
+
+    </ul>
+
+</nav>
+
+<script th:fragment="pageScript" th:inline="javascript">
+
+    var total = [[${totals}]];
+    var page = [[${page}]];
+    for (var i = 1; i <= total; i++) {
+        if (i === page) {
+            $("#pageSelect").append("<option selected value='"+i+"'>"+i+"</option>")
+        }else{
+            $("#pageSelect").append("<option value='"+i+"'>"+i+"</option>")
+        }
+    }
+
+    $("#pageSelect").change(function () {
+        $("form").submit();
+    })
+
+
+</script>
+</html>

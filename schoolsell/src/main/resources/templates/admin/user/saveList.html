@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+            <form role="form" enctype="multipart/form-data" action="/sell/admin/user/saveList" method="post">
+
+                <div class="form-group">
+                    <label for="file">
+                        用户Excel文件
+                    </label>
+                    <input type="file" class="form-control" id="file" name="file" />
+                </div>
+
+                <input type="hidden" name="token" th:value="${token}">
+                <button type="submit" class="btn btn-block btn-lg btn-primary">
+                    添加
+                </button>
+            </form>
+            <a style="float: right" id="modal-921515" href="#modal-container-921515" role="button" class="btn" data-toggle="modal">查看帮助</a>
+        </div>
+
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-container-921515" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">
+                    帮助
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="text-indent:2em">需要上传的Excel文件，格式请严格按照如下。否则会影响保存数据的成功率。</p>
+                <p style="text-indent: 2em">电话一定不能有重复，一定要用能使用的手机号</p>
+                <img width="465px" height="300px" src="https://sell.nos-eastchina1.126.net/ioefhrewioqfjpoefqw.png">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

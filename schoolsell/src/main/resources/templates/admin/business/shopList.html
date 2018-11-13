@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/common/head::head"></head>
+<style th:replace="admin/common/head::style"></style>
+<body>
+<div class="container-fluid">
+    <div th:replace="admin/common/header::header"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>商铺ID</th>
+                            <th>商铺LOGO</th>
+                            <th>商铺名</th>
+                            <th>所属商家</th>
+                            <th>所属区域</th>
+                            <th>商铺电话</th>
+                            <th>商铺状态</th>
+                            <th>商铺地址</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shop:${shops}">
+
+                            <td th:text="${shop.getShopId()}"></td>
+                            <td><img th:src="${shop.getShopLogo()}" width="30px" height="30px"></td>
+                            <td th:text="${shop.getShopName()}"></td>
+                            <td th:text="${shop.getBusinessName()}"></td>
+                            <td th:text="${shop.getRegionName()}"></td>
+                            <td th:text="${shop.getShopPhone()}"></td>
+                            <td th:text="${shop.getShopStatus()}"></td>
+                            <td th:text="${shop.getShopAddr()}"></td>
+                            <td><a th:href="'/sell/admin/business/details/'+${shop.getShopId()}+'?token='+${token}">查看详情</a></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
