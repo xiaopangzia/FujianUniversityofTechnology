@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SchoolsellApplication",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "com.cheng.schoolsell.SchoolsellApplication",
+            "args": "",
+            "projectName": "schoolsell"
+        }
+    ]
+}
