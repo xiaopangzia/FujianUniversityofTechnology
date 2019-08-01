@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: order
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG-SERVER
+      profile: dev
+      # label: 分支
+  zipkin:
+    base-url: http://35.194.218.194:9411/
+    enabled: true
+    locator:
+      discovery:
+        enabled: true
+    sender:
+      type: WEB
+  sleuth:
+    sampler:
+      probability: 1.0
+    web:
+      client:
+        enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+hystrix:
+  command:
+    # default 默认 可以更改为方法名 为指定方法设置降级策略
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
+# feign 开启hystrix
+feign:
+  hystrix:
+    enabled: true
+logging:
+  level:
+    root: info
+    org.springframework.web: trace
