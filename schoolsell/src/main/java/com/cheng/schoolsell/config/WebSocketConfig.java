@@ -1,0 +1,22 @@
+package com.cheng.schoolsell.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+
+/**
+ * Created with IntelliJ IDEA.
+ * Description:
+ * User: cheng
+ * Date: 2018-11-16
+ * Time: 下午7:43
+ */
+@Component
+public class WebSocketConfig {
+
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+
+}

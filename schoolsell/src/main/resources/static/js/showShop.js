@@ -23,7 +23,7 @@ function showCategory(shopId) {
                     '                        <div class="card-body">\n' +
                     '                        <!--商品分类-->\n' +
                     '                        <h5># ' + product[i].categoryName + '</h5>\n' +
-                    '                        <div class="row" id="pd' + product[i].categoryType + '">\n' +
+                    '                        <div class="row h-100" id="pd' + product[i].categoryType + '">\n' +
                     '                            \n' +
                     '                        </div>\n' +
                     '                    </div>\n' +
@@ -35,17 +35,17 @@ function showCategory(shopId) {
             for (let i = 0; i < product.length; i++) {
                 var oneProduct = '';
                 for (let j = 0; j < product[i].productVOList.length; j++) {
-                    oneProduct += ' <div class="col-md-3 col-6 border">\n' +
+                    oneProduct += ' <div class="col-md-3 col-6 col-sm-4 border">\n' +
                         '                                <img src="' + product[i].productVOList[j].productImg + '"\n' +
-                        '                                     class="w-100 h-75" style="padding-top: 20px;"/>\n' +
-                        '                                <div style="margin: 10px 0">\n' +
+                        '                                     class="w-100" style="width: 60%;padding-top: 15px"/>\n' +
+                        '                                <div>\n' +
                         '                                    <b id="name' + product[i].productVOList[j].productId + '">' + product[i].productVOList[j].productName + '</b>\n' +
                         '                                    <p>\n' +
                         '                                        <b id="price' + product[i].productVOList[j].productId + '" class="float-left">' + product[i].productVOList[j].productPrice + '</b> 元\n' +
                         '                                        <a class="float-right" id="addCart' + product[i].productVOList[j].productId + '" onclick="addCart(&quot;' + product[i].productVOList[j].productId + '&quot;)" ' +
                         '                                          href="javascript:void(0)">\n' +
                         '                                            <span id="number' + product[i].productVOList[j].productId + '"></span>\n' +
-                        '                                            <img src="/sell/image/jia.png">\n' +
+                        '                                            <img width="21px" src="/sell/image/jia.png">\n' +
                         '                                        </a>\n' +
                         '                                    </p>\n' +
                         '                                </div>\n' +

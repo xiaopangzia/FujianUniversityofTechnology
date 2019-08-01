@@ -20,7 +20,7 @@ function showDetail(orderId) {
                     '                            <span>状态：未支付</span>\n' +
                     '                            <span class="float-right">\n' +
                     '                                <button class="btn" onclick="cancelPay(&quot;'+orderId+'&quot;)">取消</button>\n' +
-                    '                                <button class="btn btn-danger" onclick="toPay(&quot;' + orderId + '&quot;)">付款</button>\n' +
+                    '                                <a class="btn btn-danger" href="/sell/user/order/pay/'+orderId+'">付款</a>\n' +
                     '                            </span>\n' +
                     '                        </div>\n' +
                     '                    </div>\n' +

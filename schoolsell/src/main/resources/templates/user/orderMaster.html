@@ -81,7 +81,7 @@
                             </p>
                         </div>
                         <div class="card-footer">
-                            <p class="card-text float-right" th:text="'价格：'+${vo.getOrderAmount()}"></p>
+                            <p class="card-text float-right" th:text="'价格：'+${vo.getOrderAmount()}+'元'"></p>
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,6 @@
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/js/toastTemplet.js}"></script>
-<script th:src="@{/js/userInfo.js}"></script>
 <script th:inline="javascript">
     var total = [[${total}]];
     var page = [[${page}]];
@@ -200,6 +199,22 @@
     }
 
     $("#ulLi").html(ulLi);
+
+    /**
+     * 用户退出登录
+     * @param id
+     */
+    function userLogout(id) {
+        $.ajax({
+            url: "/sell/user/logout/" + id,
+            dataType: "json",
+            type: "get",
+            cache: false,
+            success: function () {
+                window.location.href = "/sell/user/index";
+            },
+        })
+    }
 </script>
 </body>
 </html>

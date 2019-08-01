@@ -73,8 +73,6 @@ public class BusinessUpdateInfoController {
                                             @RequestParam("oldBusinessPhone") String oldBusinessPhone,
                                             HttpServletRequest request) {
 
-        //todo 后期添加阿里云短信服务，验证手机号
-
         if (StringUtils.isEmpty(businessPhone)||StringUtils.isEmpty(oldBusinessPhone)) {
             log.error("修改商户手机号：手机号为空,businessPhone={}", businessPhone);
             throw new BusinessException(BusinessResultEnum.BUSINESS_PHONE_EXIST);

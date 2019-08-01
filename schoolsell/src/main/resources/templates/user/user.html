@@ -41,7 +41,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="#">个人中心</a>
-
+                                <span id="ur" style="display: none" th:text="${id}"></span>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)" th:onclick="|userLogout('${id}')|">退出登录</a>
                             </div>
@@ -75,7 +75,7 @@
                                     <input type="text" class="form-control" id="phone" name="phone" required/>
                                 </div>
 
-                                <button type="button" class="btn btn-light" th:onclick="|updatePhone('${id}')|">
+                                <button id="unPhone" type="button" class="btn btn-light">
                                     修改
                                 </button>
                                 <button type="reset" class="btn btn-light">
@@ -103,7 +103,7 @@
                                     <input type="text" class="form-control" id="username" name="username" required/>
                                 </div>
 
-                                <button type="button" class="btn btn-light" th:onclick="|updateName('${id}')|">
+                                <button type="button" id="unBtn" class="btn btn-light" th:onclick="|updateName('${id}')|">
                                     修改
                                 </button>
                                 <button type="reset" class="btn btn-light">
@@ -168,7 +168,7 @@
                                     <input type="password" class="form-control" id="verifyNewPassword" required name="verifyNewPassword"/>
                                 </div>
 
-                                <button type="button" class="btn btn-light" th:onclick="|updatePwd('${id}')|" >
+                                <button id="unPwd" type="button" class="btn btn-light">
                                     修改
                                 </button>
                                 <button type="reset" class="btn btn-light" >
@@ -267,6 +267,7 @@
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/js/toastTemplet.js}"></script>
+<script th:src="@{/js/gt.js}"></script>
 <script th:src="@{/js/userInfo.js}"></script>
 <script th:src="@{/js/showImg.js}"></script>
 </body>

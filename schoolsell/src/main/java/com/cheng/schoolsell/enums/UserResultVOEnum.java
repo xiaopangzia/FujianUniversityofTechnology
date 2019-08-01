@@ -229,6 +229,18 @@ public enum UserResultVOEnum {
      */
     USER_ORDER_CANCEL_SUCCESS(200, "订单已取消"),
 
+    /**
+     * code:28
+     * message:fail
+     */
+    USER_VERIFY_ERROR(28, "fail"),
+
+    /**
+     * code:29
+     * message:您的地址为空，请去填写地址，再进行下单！
+     */
+    USER_CREATE_ADDRESS_EXIST(29, "您的地址为空，请去填写地址，再进行下单！"),
+
     ;
 
     private Integer code;

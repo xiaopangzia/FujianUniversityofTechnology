@@ -42,14 +42,6 @@
                 </button>
                 <a class="navbar-brand" href="/sell/user/index">校园点餐</a>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-                    <form class="form-inline ml-md-auto">
-                        <input class="form-control mr-sm-2" type="text" id="shopName" placeholder="请输入商铺"/>
-                        <button class="btn btn-secondary my-2 my-sm-0" id="searchShop" type="button">
-                            搜索
-                        </button>
-                    </form>
-
                     <ul class="navbar-nav ml-md-auto">
                         <li class="nav-item active">
                             <a class="nav-link" th:href="'/sell/user/login?url=/sell/user/shop/'+${shopId}">登录</a>
@@ -271,12 +263,26 @@
 <script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/js/toastTemplet.js}"></script>
 <script th:src="@{/js/userCommon.js}"></script>
-<script th:src="@{/js/userInfo.js}"></script>
 <script th:src="@{/js/showShop.js}"></script>
 <script th:inline="javascript">
     var shopId = [[${shop?.getShopId()}]];
     if (shopId != null || shopId != "") {
         showCategory(shopId);
+    }
+    /**
+     * 用户退出登录
+     * @param id
+     */
+    function userLogout(id) {
+        $.ajax({
+            url: "/sell/user/logout/" + id,
+            dataType: "json",
+            type: "get",
+            cache: false,
+            success: function () {
+                window.location.href = "/sell/user/index";
+            },
+        })
     }
 </script>
 </body>

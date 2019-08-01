@@ -73,6 +73,11 @@ public class OrderMaster {
   private String orderMessage;
 
   /**
+   * paypal 退款Id
+   */
+  private String saleId;
+
+  /**
    * 创建时间
    */
   private Date createTime;

@@ -9,6 +9,7 @@ import com.cheng.schoolsell.utils.CookieUtil;
 import com.cheng.schoolsell.utils.ResultVoUtil;
 import com.cheng.schoolsell.vo.BusinessOrderVO;
 import com.cheng.schoolsell.vo.ResultVO;
+import com.paypal.base.rest.PayPalRESTException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +79,11 @@ public class BusinessShopOrderController {
     @ResponseBody
     public ResultVO orderCancel(@PathVariable("orderId") String orderId) {
 
-        orderService.updateBusinessOrderStatus(orderId);
+        try {
+            orderService.updateBusinessOrderStatus(orderId);
+        } catch (PayPalRESTException e) {
+            log.error("修改失败：退款失败");
+        }
 
         return ResultVoUtil.success("取消订单成功");
     }

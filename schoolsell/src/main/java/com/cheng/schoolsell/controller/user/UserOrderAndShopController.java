@@ -1,35 +1,37 @@
 package com.cheng.schoolsell.controller.user;
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.cheng.schoolsell.entity.OrderMaster;
 import com.cheng.schoolsell.entity.Shop;
 import com.cheng.schoolsell.entity.User;
+import com.cheng.schoolsell.enums.PaypalPaymentIntent;
+import com.cheng.schoolsell.enums.PaypalPaymentMethod;
 import com.cheng.schoolsell.enums.UserResultVOEnum;
 import com.cheng.schoolsell.exception.UserException;
 import com.cheng.schoolsell.form.UserOrderDetailForm;
 import com.cheng.schoolsell.form.UserOrderUpdateForm;
-import com.cheng.schoolsell.service.OrderService;
-import com.cheng.schoolsell.service.ProductInfoService;
-import com.cheng.schoolsell.service.ShopService;
-import com.cheng.schoolsell.service.UserService;
+import com.cheng.schoolsell.service.*;
 import com.cheng.schoolsell.utils.CookieUtil;
 import com.cheng.schoolsell.utils.ResultVoUtil;
+import com.cheng.schoolsell.utils.WebSocketUtil;
 import com.cheng.schoolsell.vo.OrderMasterAllVO;
 import com.cheng.schoolsell.vo.OrderMasterVO;
 import com.cheng.schoolsell.vo.ResultVO;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +60,9 @@ public class UserOrderAndShopController {
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private PaypalService paypalService;
 
     @GetMapping("/index")
     @ApiOperation(value = "跳转到订单页")
@@ -146,6 +151,11 @@ public class UserOrderAndShopController {
 
         User user = userService.findById(userId).get();
 
+        if (StringUtils.isEmpty(user.getAddress())) {
+            log.error("创建订单:用户地址为空");
+            throw new UserException(UserResultVOEnum.USER_CREATE_ADDRESS_EXIST);
+        }
+
         String orderId = orderService.
                 orderCreate(userOrderDetailFormList, shopId, user);
 
@@ -190,6 +200,8 @@ public class UserOrderAndShopController {
         }
         orderService.updateOrderMsg(userOrderUpdateForm, orderId);
 
+
+
         return ResultVoUtil.success(UserResultVOEnum.USER_ORDER_UPDATE_MESSAGE_SUCCESS);
     }
 
@@ -199,13 +211,98 @@ public class UserOrderAndShopController {
     public ResultVO updateOrderStatus(@PathVariable("orderId") String orderId,
                                       @RequestParam("code") Integer code) {
 
-        orderService.updateOrderStatus(orderId, code);
-        if (code == 1) {
-            return ResultVoUtil.success(UserResultVOEnum.USER_ORDER_PAY_SUCCESS);
-        }else {
-            return ResultVoUtil.success(UserResultVOEnum.USER_ORDER_CANCEL_SUCCESS);
-        }
+        String shopId = orderService.updateOrderStatus(orderId, code,null);
 
+        return ResultVoUtil.success(UserResultVOEnum.USER_ORDER_CANCEL_SUCCESS);
+
+    }
+
+    @GetMapping("/pay/{orderId}")
+    public String payOrder(@PathVariable("orderId") String orderId,
+                           HttpServletRequest request) {
+
+
+
+        OrderMaster orderMaster = orderService.getOrderAmount(orderId);
+        if (orderMaster.getOrderStatus().equals(0)) {
+
+            //todo 线上和开发
+            //开发环境
+            String cancelUrl = "http://127.0.0.1/sell/user/order/detail/" + orderId;
+            String successUrl = "http://127.0.0.1/sell/user/order/success/" + orderId;
+
+            //线上环境
+            /*String cancelUrl = "https://antice.top/sell/user/order/detail/" + orderId;
+            String successUrl = "https://antice.top/sell/user/order/success/" + orderId;*/
+
+            try {
+                Payment payment = paypalService.createPayment(
+                        orderMaster.getOrderAmount().doubleValue(),
+                        "USD",
+                        PaypalPaymentMethod.paypal,
+                        PaypalPaymentIntent.sale,
+                        "订单号:" + orderMaster.getOrderId()
+                                +",总价:"+orderMaster.getOrderAmount()+"元",
+                        cancelUrl,
+                        successUrl);
+                for(Links links : payment.getLinks()){
+                    if(("approval_url").equals(links.getRel())){
+                        return "redirect:" + links.getHref();
+                    }
+                }
+            } catch (PayPalRESTException e) {
+                log.error(e.getMessage());
+            }
+        }
+        return "redirect:/user/order/cancel" + orderId;
+    }
+
+    @GetMapping("/success/{orderId}")
+    public String successPay(@PathVariable("orderId") String orderId,
+                             @RequestParam("paymentId") String paymentId,
+                             @RequestParam("PayerID") String payerId) {
+        
+        try {
+            Payment payment = paypalService.executePayment(paymentId, payerId);
+            if (("approved").equals(payment.getState())) {
+                String saleId = payment.getTransactions()
+                        .get(0).getRelatedResources()
+                        .get(0).getSale().getId();
+
+                String shopId = orderService.updateOrderStatus(orderId, 1,saleId);
+                WebSocketUtil.sendInfo("有新订单啦;订单号为："+orderId, shopId);
+                return "redirect:/user/order/paySuccess/" + orderId;
+            }
+        } catch (PayPalRESTException e) {
+            log.error("修改订单状态,msg={}",e.getMessage());
+        } catch (IOException e) {
+            log.error("修改订单状态,msg={}",e.getMessage());
+        }
+        return "redirect:/user/order/cancel/" + orderId;
+    }
+
+    @GetMapping("/paySuccess/{orderId}")
+    public ModelAndView successShow(@PathVariable("orderId") String orderId,
+                                    Map<String, Object> map) {
+        map.put("code", 2);
+        map.put("url", "/sell/user/order/detail/" + orderId);
+        return new ModelAndView("user/orderMsg", map);
+    }
+
+    @GetMapping("/cancel/{orderId}")
+    public ModelAndView orderCancel(@PathVariable("orderId") String orderId,
+                                    Map<String,Object> map) {
+
+        OrderMaster orderMaster = orderService.getOrderAmount(orderId);
+
+        if (!orderMaster.getOrderStatus().equals(0)) {
+            map.put("code", 0);
+        }else{
+            map.put("code", 1);
+        }
+        map.put("url", "/sell/user/order/detail/" + orderId);
+
+        return new ModelAndView("user/orderMsg",map);
     }
 
 }

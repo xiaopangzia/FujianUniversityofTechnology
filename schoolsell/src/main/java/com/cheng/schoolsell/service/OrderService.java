@@ -6,6 +6,7 @@ import com.cheng.schoolsell.form.UserOrderDetailForm;
 import com.cheng.schoolsell.form.UserOrderUpdateForm;
 import com.cheng.schoolsell.vo.BusinessOrderVO;
 import com.cheng.schoolsell.vo.OrderMasterVO;
+import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.data.domain.Page;
 
 import javax.transaction.Transactional;
@@ -60,8 +61,10 @@ public interface OrderService  {
      * 修改订单的状态
      * @param orderId
      * @param code
+     * @param saleId
+     * @return
      */
-    void updateOrderStatus(String orderId, Integer code);
+    String updateOrderStatus(String orderId, Integer code,String saleId);
 
     /**
      * 商铺分页获取订单
@@ -74,8 +77,9 @@ public interface OrderService  {
     /**
      * 商户修改订单状态
      * @param orderId
+     * @throws PayPalRESTException
      */
-    void updateBusinessOrderStatus(String orderId);
+    void updateBusinessOrderStatus(String orderId) throws PayPalRESTException;
 
     /**
      * 查询商铺订单
@@ -89,4 +93,11 @@ public interface OrderService  {
      * @return
      */
     Map<String, Object> getAdminIndexMsg();
+
+    /**
+     * 查询订单金额
+     * @param orderId
+     * @return
+     */
+    OrderMaster getOrderAmount(String orderId);
 }

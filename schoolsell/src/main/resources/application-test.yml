@@ -2,18 +2,15 @@ spring:
   jackson:
     # json返回空时,不返回
     default-property-inclusion: non_null
-  jpa:
-    # 控制台输出sql语句
-    show-sql: true
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/schoolsell?characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.123.33/schoolsell?characterEncoding=utf-8&useSSL=false
   # Redis 配置
   redis:
-    host: 192.168.123.33
+    host: 127.0.0.1
     password: 123456
     port: 6379
   servlet:
@@ -22,6 +19,8 @@ spring:
   mvc:
     favicon:
       enabled: true
+  jpa:
+    show-sql: true
 server:
   port: 8080
   servlet:

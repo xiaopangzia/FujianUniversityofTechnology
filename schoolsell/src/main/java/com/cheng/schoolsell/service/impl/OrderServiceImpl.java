@@ -20,6 +20,11 @@ import com.cheng.schoolsell.service.OrderService;
 import com.cheng.schoolsell.utils.KeyUtil;
 import com.cheng.schoolsell.vo.OrderDetailVO;
 import com.cheng.schoolsell.vo.OrderMasterVO;
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.RefundRequest;
+import com.paypal.api.payments.Sale;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.PayPalRESTException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +60,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private APIContext apiContext;
 
     @Override
     public String orderCreate(List<UserOrderDetailForm> userOrderDetailFormList,
@@ -183,7 +191,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrderStatus(String orderId, Integer code) {
+    public String updateOrderStatus(String orderId, Integer code,String saleId) {
         OrderMaster orderMaster = masterRepository.findById(orderId).get();
         Integer status = orderMaster.getOrderStatus();
         if (code.equals(status)) {
@@ -201,8 +209,15 @@ public class OrderServiceImpl implements OrderService {
             throw new UserException(UserResultVOEnum.USER_STATUS_NOT_CANCEL);
         }
 
+        if (code == 1) {
+            orderMaster.setSaleId(saleId);
+        }
+
         orderMaster.setOrderStatus(code);
+
         masterRepository.save(orderMaster);
+
+        return orderMaster.getShopId();
 
     }
 
@@ -325,9 +340,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateBusinessOrderStatus(String orderId) {
+    public void updateBusinessOrderStatus(String orderId) throws PayPalRESTException {
         OrderMaster orderMaster = masterRepository.findById(orderId).get();
         if (orderMaster.getOrderStatus() != 2) {
+            if (orderMaster.getOrderStatus() == 1) {
+                String saleId = orderMaster.getSaleId();
+                Sale sale = new Sale();
+                sale.setId(saleId);
+
+                RefundRequest refundRequest = new RefundRequest();
+
+                Amount amount = new Amount();
+                amount.setCurrency("USD");
+                amount.setTotal(String.valueOf(orderMaster.getOrderAmount()));
+                refundRequest.setAmount(amount);
+                sale.refund(apiContext, refundRequest);
+            }
+
             orderMaster.setOrderStatus(2);
         }
         masterRepository.save(orderMaster);
@@ -432,6 +461,15 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return map;
+    }
+
+    @Override
+    public OrderMaster getOrderAmount(String orderId) {
+
+        OrderMaster orderMaster =
+                masterRepository.findById(orderId).get();
+
+        return orderMaster;
     }
 
 }

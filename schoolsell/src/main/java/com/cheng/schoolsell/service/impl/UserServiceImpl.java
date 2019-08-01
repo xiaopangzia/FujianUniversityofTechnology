@@ -160,7 +160,7 @@ public class UserServiceImpl implements UserService {
             throw new UserException(UserResultVOEnum.USER_UPLOADIMG_ERROR);
         }
 
-        if (!ShopConstant.SHOPIMG.equals(oldUrl)) {
+        if (!UserConstant.USERIMG.equals(oldUrl)) {
             uploadUtil.deleteFileNOS(oldUrl);
         }
 

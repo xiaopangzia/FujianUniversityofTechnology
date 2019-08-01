@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="hhtp://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link th:href="@{/image/favicon.ico}" rel="shortcut icon" type="image/x-icon">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <title>校园外卖</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6" style="margin-top: 60px">
+
+                <div th:if="${code}==0" class="alert alert-dismissable alert-warning">
+                    <h4>
+                        Alert!
+                    </h4>
+                    <strong>失败!</strong>
+                    您已支付完成，请勿重复支付。
+                    <a th:href="${url}" class="alert-link">点击回到订单页</a>
+                </div>
+
+                <div th:if="${code}==1" class="alert alert-dismissable alert-warning">
+                    <h4>
+                        Alert!
+                    </h4>
+                    <strong>失败!</strong>
+                    支付失败，请重新支付。
+                    <a th:href="${url}" class="alert-link">点击回到订单页</a>
+                </div>
+
+                <div th:if="${code}==2" class="alert alert-dismissable alert-success">
+                    <h4>
+                        Alert!
+                    </h4>
+                    <strong>成功!</strong>
+                    您已支付成功,请等到商家配送。
+                    <a th:href="${url}" class="alert-link">点击到订单页</a>或者
+                    <a href="/sell/user/index" class="alert-link">到首页</a>
+                </div>
+
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+</html>

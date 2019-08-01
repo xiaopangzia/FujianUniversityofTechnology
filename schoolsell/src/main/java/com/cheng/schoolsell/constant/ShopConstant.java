@@ -13,7 +13,7 @@ public interface ShopConstant {
     /**
      * 默认商铺logo
      */
-    String SHOPIMG = "https://sell.nos-eastchina1.126.net/wertweqtertrwetgwedrwer.jpg";
+    String SHOPIMG = "https://sell.nos-eastchina1.126.net/meishi.jpeg";
 
 
 }

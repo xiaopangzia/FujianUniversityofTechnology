@@ -6,6 +6,7 @@ import com.cheng.schoolsell.exception.BusinessException;
 import com.cheng.schoolsell.form.BusinessForm;
 import com.cheng.schoolsell.service.SellerService;
 import com.cheng.schoolsell.utils.CookieUtil;
+import com.cheng.schoolsell.utils.GeetestUtil;
 import com.cheng.schoolsell.utils.KeyUtil;
 import com.cheng.schoolsell.utils.ResultBusinessMapUtil;
 import io.swagger.annotations.Api;
@@ -44,7 +45,8 @@ public class BusinessLoginController {
 
     @GetMapping("/login")
     @ApiOperation(value = "跳转到商户登录页")
-    public ModelAndView businessLogin(){
+    public ModelAndView businessLogin(Map<String,Object> map){
+
         return new ModelAndView("business/login");
     }
 

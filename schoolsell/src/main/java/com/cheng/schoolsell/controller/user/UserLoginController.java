@@ -5,6 +5,7 @@ import com.cheng.schoolsell.enums.UserResultVOEnum;
 import com.cheng.schoolsell.exception.UserException;
 import com.cheng.schoolsell.service.UserService;
 import com.cheng.schoolsell.utils.CookieUtil;
+import com.cheng.schoolsell.utils.GeetestUtil;
 import com.cheng.schoolsell.utils.KeyUtil;
 import com.cheng.schoolsell.utils.ResultVoUtil;
 import com.cheng.schoolsell.vo.ResultVO;
@@ -43,10 +44,13 @@ public class UserLoginController {
     @GetMapping("/login")
     @ApiOperation(value = "跳转到登录页")
     public ModelAndView userLogin(@RequestParam(value = "url",required = false) String url,
-                                  Map<String,Object> map){
+                                  Map<String,Object> map,
+                                  HttpServletRequest request){
         if (!StringUtils.isEmpty(url)) {
             map.put("url", url);
         }
+        String resStr = GeetestUtil.startCaptcha(request);
+        map.put("resStr", resStr);
         return new ModelAndView("user/login",map);
     }
 
@@ -87,6 +91,12 @@ public class UserLoginController {
         if (!user.isPresent()) {
             log.error("用户登录：用户不存在;phone={},password={}",phone,password);
             throw new UserException(UserResultVOEnum.USER_NO_EXIST);
+        }
+
+        int verify = GeetestUtil.verifyLogin(request);
+        if (verify == 0) {
+            log.error("用户登录：用户验证失败;");
+            throw new UserException(UserResultVOEnum.USER_VERIFY_ERROR);
         }
 
         /**

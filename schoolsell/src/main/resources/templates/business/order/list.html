@@ -92,8 +92,10 @@
     </div>
 
 </div>
-<script th:src="@{/js/toastr.min.js}"></script>
-<script th:src="@{/js/toastTemplet.js}"></script>
+<audio id="notice">
+    <source th:src="@{/mp3/song.mp3}" type="audio/mpeg" />
+</audio>
+<script th:src="@{/js/webSocket.js}"></script>
 <script>
     function cancelOrder(orderId) {
         if (confirm('确定要取消订单吗？')) {
@@ -107,6 +109,13 @@
                 }
             })
         }
+    }
+</script>
+
+<script th:inline="javascript">
+    var shopId = [[${business.getShopId()}]];
+    if (shopId != null) {
+        webSocket(shopId);
     }
 </script>
 </body>

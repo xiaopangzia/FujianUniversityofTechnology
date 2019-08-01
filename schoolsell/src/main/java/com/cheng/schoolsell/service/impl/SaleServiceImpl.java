@@ -140,7 +140,7 @@ public class SaleServiceImpl implements SaleService {
     public List<ShopSale> getShopSaleByProductId(String productId) {
 
         List<ShopSale> shopSales =
-                shopSaleRepository.findByProductIdOrderBySaleNumAsc(productId);
+                shopSaleRepository.findByProductIdOrderBySaleTimeAsc(productId);
 
         return shopSales;
     }
@@ -162,7 +162,8 @@ public class SaleServiceImpl implements SaleService {
         LocalDate two = LocalDate.now();
         List<UserSale> userSales =
                 userSaleRepository
-                        .findByUserIdAndSaleTimeBetween(userId, one, two);
+                        .findByUserIdAndSaleTimeBetweenOrderBySaleTimeAsc
+                                (userId, one, two);
         List<LocalDate> dates = new ArrayList<>();
         List<BigDecimal> amounts = new ArrayList<>();
         List<Integer> nums = new ArrayList<>();

@@ -19,7 +19,7 @@ public interface ShopSaleRepository extends JpaRepository<ShopSale,String> {
      * @param productId
      * @return
      */
-    List<ShopSale> findByProductIdOrderBySaleNumAsc(String productId);
+    List<ShopSale> findByProductIdOrderBySaleTimeAsc(String productId);
 
     /**
      * 查询商铺的营业信息

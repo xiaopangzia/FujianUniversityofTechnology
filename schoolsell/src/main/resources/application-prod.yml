@@ -36,3 +36,10 @@ netease:
     secretKey: 73569e69465378386151941a2f479fa9
     uploadUrl: nos-eastchina1.126.net
     bucket: sell
+
+paypal:
+  mode: sandbox
+  client:
+    app: ASt97kzztKGI-3Ej8jG047hiMUZCEFhpTCRYoAmnBHTwK595FgpGhmlBZVa9ZkHs63A-8iCPJrDylvvr
+    secret: EPUWwZxRIhNzF8UCWoOdIZdMSwkl4SG1-AcmwzHlVRCxDKIAHKi29tQPQ_LPL6UIIVmzcSAFD49qbPE8
+

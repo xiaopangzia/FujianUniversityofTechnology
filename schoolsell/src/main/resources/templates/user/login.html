@@ -21,6 +21,117 @@
         color: #ffffff;
         border-radius: 7px;
     }
+    #captcha {
+        display: inline-block;
+    }
+
+    #text {
+        text-align: center;
+        border-radius: 2px;
+        background-color: #F3F3F3;
+        color: #BBBBBB;
+        font-size: 14px;
+        letter-spacing: 0.1px;
+    }
+
+    #wait {
+        display: none;
+        height: 42px;
+        width: 100%;
+        text-align: center;
+        border-radius: 2px;
+        background-color: #F3F3F3;
+    }
+
+    .loading {
+        margin: auto;
+        width: 100%;
+        height: 100px;
+    }
+
+    .loading-dot {
+        float: left;
+        width: 8px;
+        height: 8px;
+        margin: 18px 4px;
+        background: #ccc;
+
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+
+        opacity: 0;
+
+        -webkit-box-shadow: 0 0 2px black;
+        -moz-box-shadow: 0 0 2px black;
+        -ms-box-shadow: 0 0 2px black;
+        -o-box-shadow: 0 0 2px black;
+        box-shadow: 0 0 2px black;
+
+        -webkit-animation: loadingFade 1s infinite;
+        -moz-animation: loadingFade 1s infinite;
+        animation: loadingFade 1s infinite;
+    }
+
+    .loading-dot:nth-child(1) {
+        -webkit-animation-delay: 0s;
+        -moz-animation-delay: 0s;
+        animation-delay: 0s;
+    }
+
+    .loading-dot:nth-child(2) {
+        -webkit-animation-delay: 0.1s;
+        -moz-animation-delay: 0.1s;
+        animation-delay: 0.1s;
+    }
+
+    .loading-dot:nth-child(3) {
+        -webkit-animation-delay: 0.2s;
+        -moz-animation-delay: 0.2s;
+        animation-delay: 0.2s;
+    }
+
+    .loading-dot:nth-child(4) {
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+    }
+
+    @-webkit-keyframes loadingFade {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-moz-keyframes loadingFade {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes loadingFade {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -31,10 +142,25 @@
             <div style="height: 50px"></div>
             <form role="form" method="post" id="form">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="用户手机号" name="phone" id="phone"/>
+                    <input type="text" class="form-control" placeholder="用户手机号" name="phone" id="phone" required/>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="密码" name="password" id="password"/>
+                    <input type="password" class="form-control" placeholder="密码" name="password" id="password" required/>
+                </div>
+                <div class="form-group">
+                    <div id="captcha" class="form-control">
+                        <div id="text">
+                            行为验证™ 安全组件加载中
+                        </div>
+                        <div id="wait" class="show">
+                            <div class="loading">
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                                <div class="loading-dot"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <button type="button" id="btn-log" class="btn btn-block btn-lg btn-outline-primary">
                     登录
@@ -50,29 +176,85 @@
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/toastr.min.js}"></script>
 <script th:src="@{/js/toastTemplet.js}"></script>
+<script th:src="@{/js/gt.js}"></script>
 <script th:inline="javascript">
-    var url = [[${url}]]
-    $("#btn-log").click(function () {
-        $.ajax({
-            url:"/sell/user/login",
-            type:"POST",
-            dataType:"text",
-            data:$("#form").serialize(),
-            cache:false,
-            success:function (data) {
-                if (url == null) {
-                    window.location.href="/sell/user/index"
-                }else {
-                    window.location.href = url;
-                }
-            },
-            error:function (request) {
-                $("#password").val("");
-                var result = JSON.parse(request.responseText);
-                toastTemplet("error",result.msg)
+    var url = [[${url}]];
+    var x = JSON.parse([[${resStr}]]);
+
+    var handler = function (captchaObj) {
+        captchaObj.appendTo('#captcha');
+        captchaObj.onReady(function () {
+            $("#wait").hide();
+        });
+        $('#btn-log').click(function () {
+            var result = captchaObj.getValidate();
+            if (!result) {
+                toastTemplet('error', '请完成验证');
+                return false;
             }
+            var phone = $('#phone').val();
+            var password = $('#password').val();
+
+            if (phone.length < 11) {
+                toastTemplet("error", "手机号不能少于11位");
+                return false;
+            }
+            if (password.length < 6) {
+                toastTemplet("error", "密码不能少于6位");
+                return false;
+            }
+            $.ajax({
+                url: '/sell/user/login',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    phone: phone,
+                    password: password,
+                    geetest_challenge: result.geetest_challenge,
+                    geetest_validate: result.geetest_validate,
+                    geetest_seccode: result.geetest_seccode
+                },
+                success: function () {
+                    if (url == null) {
+                        window.location.href="/sell/user/index"
+                    }else {
+                        window.location.href = url;
+                    }
+                },
+                error:function (request) {
+                    var result = JSON.parse(request.responseText);
+                    toastTemplet("error",result.msg)
+                    if (result.msg === 'fail') {
+                        toastTemplet('error','登录失败，请完成验证');
+                        captchaObj.reset();
+                    }
+                }
+            });
         })
-    })
+
+        // 更多接口说明请参见：http://docs.geetest.com/install/client/web-front/
+        window.gt = captchaObj;
+    };
+
+
+    $('#text').hide();
+    $('#wait').show();
+    // 调用 initGeetest 进行初始化
+    // 参数1：配置参数
+    // 参数2：回调，回调的第一个参数验证码对象，之后可以使用它调用相应的接口
+    initGeetest({
+        // 以下 4 个配置参数为必须，不能缺少
+        gt: x.gt,
+        challenge: x.challenge,
+        offline: !x.success, // 表示用户后台检测极验服务器是否宕机
+        new_captcha: x.new_captcha, // 用于宕机时表示是新验证码的宕机
+        https: true,
+        product: "popup", // 产品形式，包括：float，popup
+        width: "100%"
+        // 更多配置参数说明请参见：http://docs.geetest.com/install/client/web-front/
+    }, handler);
+
+
 </script>
 </body>
 </html>

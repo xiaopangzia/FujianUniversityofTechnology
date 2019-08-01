@@ -1,7 +1,6 @@
 package com.cheng.schoolsell.config;
 
 import com.cheng.schoolsell.service.SaleService;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

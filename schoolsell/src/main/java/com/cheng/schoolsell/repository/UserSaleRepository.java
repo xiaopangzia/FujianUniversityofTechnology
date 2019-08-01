@@ -22,5 +22,5 @@ public interface UserSaleRepository extends JpaRepository<UserSale,String> {
      * @param two
      * @return
      */
-    List<UserSale> findByUserIdAndSaleTimeBetween(String userId, LocalDate one,LocalDate two);
+    List<UserSale> findByUserIdAndSaleTimeBetweenOrderBySaleTimeAsc(String userId, LocalDate one,LocalDate two);
 }

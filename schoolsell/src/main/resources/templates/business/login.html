@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="business/common/head::head"></head>
 <style>
-    #login{
+    #login {
         border: 1px solid #cccccc;
         border-radius: 7px;
         padding: 10px 10px;
         margin: 300px auto;
     }
-    h1{
+
+    h1 {
         background-color: #007bff;
         padding: 0;
         color: #ffffff;
@@ -27,12 +28,14 @@
             </div>
             <form role="form" method="post" action="/sell/business/login">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="商户手机号" name="businessPhone" id="businessPhone"/>
+                    <input type="text" class="form-control" placeholder="商户手机号" name="businessPhone"
+                           id="businessPhone" required/>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="密码" name="businessPwd" id="businessPwd"/>
+                    <input type="password" class="form-control" placeholder="密码" name="businessPwd"
+                           id="businessPwd" required/>
                 </div>
-                <button type="submit" class="btn btn-block btn-lg btn-outline-primary">
+                <button type="submit" id="btn-log" class="btn btn-block btn-lg btn-outline-primary">
                     登录
                 </button>
             </form>
@@ -46,7 +49,7 @@
     $("#businessPhone").blur(function () {
         var adminUser = $(this).val();
         if (adminUser === "") {
-            toast("管理员名不能为空");
+            toast("商户手机不能为空");
 
         }
     });
@@ -60,12 +63,12 @@
 
     $("form").submit(function () {
         if ($("#businessPhone").val() === "" || $("#businessPwd").val() === "") {
-            toast("管理员名和密码不能为空");
+            toast("商户手机和密码不能为空");
             return false;
         }
     })
 
-    function toastTemplet(message) {
+    function toast(message) {
         $("#error").addClass("alert-warning")
         $("#error").text(message)
         setTimeout(function () {
