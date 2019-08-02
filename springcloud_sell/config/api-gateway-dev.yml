@@ -1,0 +1,30 @@
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+zuul:
+  routes:
+#    可随意修改，不影响访问
+    myProduct:
+      # 访问的地址
+      path: /myProduct/**
+      # 路由到的服务
+      serviceId: product
+      # 不过滤cookie
+      sensitiveHeaders:
+
+#   简洁写法
+#    product: /myProduct/**
+# 排除某些如有，只能供内部访问 set类型
+  ignored-patterns:
+    - /product/product/listForOrder
+    - /myProduct/product/listForOrder
+# 也可写成 - /**/product/listForOrder
+env:
+  dev
